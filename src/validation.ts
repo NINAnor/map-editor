@@ -58,7 +58,7 @@ export function validateMapSettings(data: unknown) {
 export function formatZodErrors(errors: z.core.$ZodIssue[]): string {
   return errors
     .map(err => {
-      const path = err.path.join('.');
+      const path = err.path.length > 0 ? err.path.join(' › ') : '(root)';
       return `${path}: ${err.message}`;
     })
     .join('\n');

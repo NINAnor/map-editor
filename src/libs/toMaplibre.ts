@@ -1,5 +1,6 @@
 import hexRgb from 'hex-rgb';
 import type { SourceProps } from 'react-map-gl/maplibre';
+import { toast } from 'react-toastify';
 import type {
   LayerWithId,
   PMTileSource,
@@ -648,8 +649,10 @@ function layerToSource(
     console.warn(`Unsupported layer type for layer ${layer.id}:`, Object.keys(layer.layer));
     return null;
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    toast.error(`Layer "${layer.name}" failed to load: ${message}`);
     console.error(`Failed to convert layer ${layer.id} to MapLibre source:`, error);
-    return null; // Return null to filter out failed layers
+    return null;
   }
 }
 

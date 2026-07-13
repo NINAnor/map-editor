@@ -1,6 +1,7 @@
 import maplibregl from 'maplibre-gl';
 import { Protocol } from 'pmtiles';
 import {
+  type ErrorEvent,
   FullscreenControl,
   GeolocateControl,
   Layer,
@@ -14,6 +15,7 @@ import { useAppStore, useBaseMap, useLayerExcludeFields, useLayers, useMaplibreM
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import MediaQuery from 'react-responsive';
+import { toast } from 'react-toastify';
 import DeckGLOverlay from './DeckGLOverlay';
 import GeocoderControl from './GeocoderControl';
 import { Popup, type PopupInfo } from './popup';
@@ -63,11 +65,18 @@ export default function Map() {
     }
   }, []);
 
+  const onMapError = useCallback((event: ErrorEvent) => {
+    const message = event.error?.message ?? 'Unknown map error';
+    toast.error(`Map error: ${message}`);
+    console.error('MapLibre error event:', event);
+  }, []);
+
   return (
     <MaplibreMap
       mapStyle={basemap}
       initialViewState={initialViewState}
       onClick={onClick}
+      onError={onMapError}
       interactiveLayerIds={interactiveLayerIds}
     >
       <GeocoderControl position="top-left" />

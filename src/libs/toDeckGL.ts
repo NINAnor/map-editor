@@ -8,6 +8,7 @@ import {
 import { readGeoParquet } from '@geoarrow/geoparquet-wasm';
 import { tableFromIPC } from 'apache-arrow';
 import wasmInit, { readParquet } from 'parquet-wasm';
+import { toast } from 'react-toastify';
 import type { LayerWithId, ParquetSource } from '../types';
 
 /**
@@ -63,6 +64,8 @@ async function loadGeoParquet(url: string, encoding: 'wkb' | 'geoarrow' = 'wkb')
       return jsTable;
     }
   } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    toast.error(`Failed to load parquet layer from ${url}: ${message}`);
     console.error(`Error loading GeoParquet from ${url} with ${encoding} encoding:`, error);
     throw error;
   }

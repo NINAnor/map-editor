@@ -61,11 +61,14 @@ export const fetchConfig = async (url: string) => {
   }
 
   // Validate the response data with Zod
-  const validatedData = MapConfigSchema.parse(response.data);
+  const result = MapConfigSchema.safeParse(response.data);
+  if (!result.success) {
+    throw result.error;
+  }
 
   return {
     ...response,
-    data: validatedData,
+    data: result.data,
   };
 };
 
@@ -85,11 +88,14 @@ export const fetchStoreConfig = async (url: string) => {
   }
 
   // Validate the response data with Zod
-  const validatedData = StoreConfigSchema.parse(response.data);
+  const result = StoreConfigSchema.safeParse(response.data);
+  if (!result.success) {
+    throw result.error;
+  }
 
   return {
     ...response,
-    data: validatedData,
+    data: result.data,
   };
 };
 
