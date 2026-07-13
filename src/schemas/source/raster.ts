@@ -8,7 +8,7 @@ import { RasterLegendSchema } from '../legend/raster';
 export const RasterSourceSchema = z
   .object({
     type: z.literal('raster'),
-    tiles: z.array(z.string()),
+    tiles: z.array(z.string()).min(1, 'At least one tile URL is required'),
     tileSize: z.number().optional(),
     minzoom: z.number().optional(),
     maxzoom: z.number().optional(),

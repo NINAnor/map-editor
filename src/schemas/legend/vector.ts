@@ -12,11 +12,16 @@ export const VectorFillValueSchema = z.object({
   opacity: z.number().optional(),
 });
 
-export const VectorFillLegendSchema = z.object({
-  default: VectorFillValueSchema.omit({ value: true }).optional(),
-  field: z.string().optional(),
-  values: z.array(VectorFillValueSchema).optional(),
-});
+export const VectorFillLegendSchema = z
+  .object({
+    default: VectorFillValueSchema.omit({ value: true }).optional(),
+    field: z.string().optional(),
+    values: z.array(VectorFillValueSchema).optional(),
+  })
+  .refine(data => !data.values?.length || !!data.field, {
+    message: "'field' is required when 'values' is provided",
+    path: ['field'],
+  });
 
 export const VectorLineValueSchema = z.object({
   value: z.string(),
@@ -27,11 +32,16 @@ export const VectorLineValueSchema = z.object({
   dasharray: z.array(z.number()).optional(),
 });
 
-export const VectorLineLegendSchema = z.object({
-  default: VectorLineValueSchema.omit({ value: true }).optional(),
-  field: z.string().optional(),
-  values: z.array(VectorLineValueSchema).optional(),
-});
+export const VectorLineLegendSchema = z
+  .object({
+    default: VectorLineValueSchema.omit({ value: true }).optional(),
+    field: z.string().optional(),
+    values: z.array(VectorLineValueSchema).optional(),
+  })
+  .refine(data => !data.values?.length || !!data.field, {
+    message: "'field' is required when 'values' is provided",
+    path: ['field'],
+  });
 
 export const VectorCircleValueSchema = z.object({
   value: z.string(),
@@ -43,11 +53,16 @@ export const VectorCircleValueSchema = z.object({
   strokeWidth: z.number().optional(),
 });
 
-export const VectorCircleLegendSchema = z.object({
-  default: VectorCircleValueSchema.omit({ value: true }).optional(),
-  field: z.string().optional(),
-  values: z.array(VectorCircleValueSchema).optional(),
-});
+export const VectorCircleLegendSchema = z
+  .object({
+    default: VectorCircleValueSchema.omit({ value: true }).optional(),
+    field: z.string().optional(),
+    values: z.array(VectorCircleValueSchema).optional(),
+  })
+  .refine(data => !data.values?.length || !!data.field, {
+    message: "'field' is required when 'values' is provided",
+    path: ['field'],
+  });
 
 /**
  * Inferred types

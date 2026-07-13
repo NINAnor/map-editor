@@ -44,11 +44,11 @@ export const BaseMapStyleSchema = z.object({
 
 export const ViewStateSchema = z
   .object({
-    longitude: z.number().optional(),
-    latitude: z.number().optional(),
-    zoom: z.number().optional(),
-    bearing: z.number().optional(),
-    pitch: z.number().optional(),
+    longitude: z.number().min(-180).max(180).optional(),
+    latitude: z.number().min(-90).max(90).optional(),
+    zoom: z.number().min(0).max(24).optional(),
+    bearing: z.number().min(-180).max(180).optional(),
+    pitch: z.number().min(0).max(85).optional(),
     padding: z
       .object({
         top: z.number(),
@@ -69,6 +69,49 @@ export const MapConfigSchema = MapMetaSchema.extend({
   items: TreeSchema.nullable(),
   expandedItems: z.array(z.string()),
   config: MapSettingsSchema,
+}).superRefine((data, ctx) => {
+  // baseMap must be a key present in the styles record
+  if (data.styles && !(data.baseMap in data.styles)) {
+    ctx.addIssue({
+      code: "custom",
+      message: `baseMap '${data.baseMap}' is not defined in styles. Valid values: ${Object.keys(data.styles).join(', ')}`,
+      path: ['baseMap'],
+    });
+  }
+
+  if (data.items === null) return;
+
+  // items must contain a 'root' folder (used as the tree root by LayerTree)
+  if (!('root' in data.items)) {
+    ctx.addIssue({
+      code: "custom",
+      message: "items must contain a 'root' key",
+      path: ['items'],
+    });
+  } else if (data.items['root'].type !== 'folder') {
+    ctx.addIssue({
+      code: "custom",
+      message: "items['root'] must be of type 'folder'",
+      path: ['items', 'root', 'type'],
+    });
+  }
+
+  // layerOrder entries must reference existing layer-type items (not folders)
+  data.layerOrder.forEach((id, index) => {
+    if (!(id in data.items!)) {
+      ctx.addIssue({
+        code: "custom",
+        message: `layerOrder entry '${id}' does not exist in items`,
+        path: ['layerOrder', index],
+      });
+    } else if (data.items![id].type !== 'layer') {
+      ctx.addIssue({
+        code: "custom",
+        message: `layerOrder entry '${id}' must be a layer, not a folder`,
+        path: ['layerOrder', index],
+      });
+    }
+  });
 });
 
 /**

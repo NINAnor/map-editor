@@ -14,14 +14,16 @@ export const RasterSequentialLegendSchema = z.object({
 
 export const RasterIntervalLegendSchema = z.object({
   type: z.literal('interval'),
-  intervals: z.array(
-    z.object({
-      min: z.number(),
-      max: z.number(),
-      color: z.string(),
-      description: z.string(),
-    }),
-  ),
+  intervals: z
+    .array(
+      z.object({
+        min: z.number(),
+        max: z.number(),
+        color: z.string(),
+        description: z.string(),
+      }),
+    )
+    .min(1, 'At least one interval is required'),
 });
 
 export const RasterImageLegendSchema = z.object({

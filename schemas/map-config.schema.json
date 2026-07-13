@@ -41,19 +41,29 @@
       "type": "object",
       "properties": {
         "longitude": {
-          "type": "number"
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
         },
         "latitude": {
-          "type": "number"
+          "type": "number",
+          "minimum": -90,
+          "maximum": 90
         },
         "zoom": {
-          "type": "number"
+          "type": "number",
+          "minimum": 0,
+          "maximum": 24
         },
         "bearing": {
-          "type": "number"
+          "type": "number",
+          "minimum": -180,
+          "maximum": 180
         },
         "pitch": {
-          "type": "number"
+          "type": "number",
+          "minimum": 0,
+          "maximum": 85
         },
         "padding": {
           "type": "object",
@@ -137,139 +147,275 @@
                   "layer": {
                     "anyOf": [
                       {
-                        "type": "object",
-                        "properties": {
-                          "type": {
-                            "type": "string",
-                            "const": "titiler"
-                          },
-                          "titiler": {
+                        "anyOf": [
+                          {
                             "type": "object",
                             "properties": {
-                              "url": {
-                                "type": "string"
-                              },
-                              "bidx": {
+                              "type": {
                                 "type": "string",
-                                "enum": [
-                                  "single",
-                                  "rgb"
-                                ]
+                                "const": "titiler"
                               },
-                              "rescale": {
-                                "type": "array",
-                                "items": {
-                                  "type": "string",
-                                  "pattern": "^[0-9.-]+,[0-9.-]+$"
-                                }
-                              }
-                            },
-                            "required": [
-                              "url",
-                              "bidx"
-                            ],
-                            "additionalProperties": {}
-                          },
-                          "legend": {
-                            "anyOf": [
-                              {
+                              "titiler": {
                                 "type": "object",
                                 "properties": {
-                                  "type": {
-                                    "type": "string",
-                                    "const": "linear"
-                                  },
-                                  "colormap_name": {
+                                  "url": {
                                     "type": "string"
                                   },
-                                  "min": {
-                                    "type": "string"
-                                  },
-                                  "max": {
-                                    "type": "string"
-                                  },
-                                  "orientation": {
+                                  "bidx": {
                                     "type": "string",
-                                    "enum": [
-                                      "horizontal",
-                                      "vertical"
-                                    ]
-                                  }
-                                },
-                                "required": [
-                                  "type",
-                                  "colormap_name",
-                                  "min",
-                                  "max"
-                                ],
-                                "additionalProperties": false
-                              },
-                              {
-                                "type": "object",
-                                "properties": {
-                                  "type": {
-                                    "type": "string",
-                                    "const": "interval"
+                                    "const": "single"
                                   },
-                                  "intervals": {
+                                  "rescale": {
                                     "type": "array",
                                     "items": {
-                                      "type": "object",
-                                      "properties": {
-                                        "min": {
-                                          "type": "number"
-                                        },
-                                        "max": {
-                                          "type": "number"
-                                        },
-                                        "color": {
-                                          "type": "string"
-                                        },
-                                        "description": {
-                                          "type": "string"
-                                        }
-                                      },
-                                      "required": [
-                                        "min",
-                                        "max",
-                                        "color",
-                                        "description"
-                                      ],
-                                      "additionalProperties": false
+                                      "type": "string",
+                                      "pattern": "^[0-9.-]+,[0-9.-]+$"
                                     }
                                   }
                                 },
                                 "required": [
-                                  "type",
-                                  "intervals"
+                                  "url",
+                                  "bidx"
                                 ],
-                                "additionalProperties": false
+                                "additionalProperties": {}
                               },
-                              {
+                              "legend": {
+                                "anyOf": [
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "const": "linear"
+                                      },
+                                      "colormap_name": {
+                                        "type": "string"
+                                      },
+                                      "min": {
+                                        "type": "string"
+                                      },
+                                      "max": {
+                                        "type": "string"
+                                      },
+                                      "orientation": {
+                                        "type": "string",
+                                        "enum": [
+                                          "horizontal",
+                                          "vertical"
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "type",
+                                      "colormap_name",
+                                      "min",
+                                      "max"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "const": "interval"
+                                      },
+                                      "intervals": {
+                                        "minItems": 1,
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "min": {
+                                              "type": "number"
+                                            },
+                                            "max": {
+                                              "type": "number"
+                                            },
+                                            "color": {
+                                              "type": "string"
+                                            },
+                                            "description": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "min",
+                                            "max",
+                                            "color",
+                                            "description"
+                                          ],
+                                          "additionalProperties": false
+                                        }
+                                      }
+                                    },
+                                    "required": [
+                                      "type",
+                                      "intervals"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "const": "image"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "type",
+                                      "url"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                ]
+                              }
+                            },
+                            "required": [
+                              "type",
+                              "titiler",
+                              "legend"
+                            ],
+                            "additionalProperties": {}
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "type": {
+                                "type": "string",
+                                "const": "titiler"
+                              },
+                              "titiler": {
                                 "type": "object",
                                 "properties": {
-                                  "type": {
-                                    "type": "string",
-                                    "const": "image"
-                                  },
                                   "url": {
                                     "type": "string"
+                                  },
+                                  "bidx": {
+                                    "type": "string",
+                                    "const": "rgb"
+                                  },
+                                  "rescale": {
+                                    "type": "array",
+                                    "items": {
+                                      "type": "string",
+                                      "pattern": "^[0-9.-]+,[0-9.-]+$"
+                                    }
                                   }
                                 },
                                 "required": [
-                                  "type",
-                                  "url"
+                                  "url",
+                                  "bidx"
                                 ],
-                                "additionalProperties": false
+                                "additionalProperties": {}
+                              },
+                              "legend": {
+                                "anyOf": [
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "const": "linear"
+                                      },
+                                      "colormap_name": {
+                                        "type": "string"
+                                      },
+                                      "min": {
+                                        "type": "string"
+                                      },
+                                      "max": {
+                                        "type": "string"
+                                      },
+                                      "orientation": {
+                                        "type": "string",
+                                        "enum": [
+                                          "horizontal",
+                                          "vertical"
+                                        ]
+                                      }
+                                    },
+                                    "required": [
+                                      "type",
+                                      "colormap_name",
+                                      "min",
+                                      "max"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "const": "interval"
+                                      },
+                                      "intervals": {
+                                        "minItems": 1,
+                                        "type": "array",
+                                        "items": {
+                                          "type": "object",
+                                          "properties": {
+                                            "min": {
+                                              "type": "number"
+                                            },
+                                            "max": {
+                                              "type": "number"
+                                            },
+                                            "color": {
+                                              "type": "string"
+                                            },
+                                            "description": {
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "min",
+                                            "max",
+                                            "color",
+                                            "description"
+                                          ],
+                                          "additionalProperties": false
+                                        }
+                                      }
+                                    },
+                                    "required": [
+                                      "type",
+                                      "intervals"
+                                    ],
+                                    "additionalProperties": false
+                                  },
+                                  {
+                                    "type": "object",
+                                    "properties": {
+                                      "type": {
+                                        "type": "string",
+                                        "const": "image"
+                                      },
+                                      "url": {
+                                        "type": "string"
+                                      }
+                                    },
+                                    "required": [
+                                      "type",
+                                      "url"
+                                    ],
+                                    "additionalProperties": false
+                                  }
+                                ]
                               }
-                            ]
+                            },
+                            "required": [
+                              "type",
+                              "titiler"
+                            ],
+                            "additionalProperties": {}
                           }
-                        },
-                        "required": [
-                          "type",
-                          "titiler"
-                        ],
-                        "additionalProperties": {}
+                        ]
                       },
                       {
                         "type": "object",
@@ -598,6 +744,7 @@
                             "const": "raster"
                           },
                           "tiles": {
+                            "minItems": 1,
                             "type": "array",
                             "items": {
                               "type": "string"
@@ -674,6 +821,7 @@
                                     "const": "interval"
                                   },
                                   "intervals": {
+                                    "minItems": 1,
                                     "type": "array",
                                     "items": {
                                       "type": "object",
