@@ -3,7 +3,7 @@
 import { Command } from 'jsr:@cliffy/command@^1';
 import * as z from 'zod';
 import pkg from '../package.json' with { type: 'json' };
-import { MapConfigSchema } from './schemas';
+import { buildSchema, validateConfig } from './map-config.ts';
 
 await new Command()
   .name('nina-maps')
@@ -32,7 +32,7 @@ await new Command()
           Deno.exit(1);
         }
 
-        const result = MapConfigSchema.safeParse(data);
+        const result = validateConfig(data);
 
         if (result.success) {
           console.log('Valid map configuration.');
@@ -46,14 +46,7 @@ await new Command()
   .command(
     'schema',
     new Command().description('Print the JSON Schema for a nina-maps configuration.').action(() => {
-      const schema = {
-        $schema: 'https://json-schema.org/draft/2020-12/schema',
-        title: 'Nina Maps Configuration',
-        description: 'Configuration schema for a nina-maps map.',
-        version: pkg.version,
-        ...z.toJSONSchema(MapConfigSchema),
-      };
-      console.log(JSON.stringify(schema, null, 2));
+      console.log(JSON.stringify(buildSchema(), null, 2));
     }),
   )
   .parse(Deno.args);

@@ -20,19 +20,32 @@ jobs:
       matrix:
         variant:
           - name: public
-            config_branch: main
-            suffix: "-readonly"
-            edit: "true"
+            image_suffix: ""
+            tag_suffix: "-readonly"
+            target: ""
+            build_args: |
+              VITE_DEFAULT_CONFIGURATION=https://s3-ext-1.nina.no/dms/maps/main/maps.json
+              VITE_HIDE_EDIT_BUTTON=true
           - name: internal
-            config_branch: main
-            suffix: ""
-            edit: "false"
+            image_suffix: ""
+            tag_suffix: ""
+            target: ""
+            build_args: |
+              VITE_DEFAULT_CONFIGURATION=https://s3-ext-1.nina.no/dms/maps/main/maps.json
+              VITE_HIDE_EDIT_BUTTON=false
+          - name: server
+            image_suffix: "-server"
+            tag_suffix: ""
+            target: "server"
+            build_args: ""
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           persist-credentials: false
+      - name: Setup Buildx
+        uses: docker/setup-buildx-action@v3
       - name: Login to registry
         if: github.event_name != 'pull_request'
         uses: docker/login-action@v2
@@ -44,17 +57,19 @@ jobs:
         id: meta
         uses: docker/metadata-action@v4
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}${{ matrix.variant.image_suffix }}
           tags: |
-            type=ref,event=branch,suffix=${{ matrix.variant.suffix }}
-            type=sha,suffix=${{ matrix.variant.suffix }}
+            type=ref,event=branch,suffix=${{ matrix.variant.tag_suffix }}
+            type=sha,suffix=${{ matrix.variant.tag_suffix }}
+            type=semver,pattern={{version}},suffix=${{ matrix.variant.tag_suffix }}
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
+          target: ${{ matrix.variant.target }}
+          push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          build-args: |
-            VITE_DEFAULT_CONFIGURATION=https://s3-ext-1.nina.no/dms/maps/${{ matrix.variant.config_branch }}/maps.json
-            VITE_HIDE_EDIT_BUTTON=${{ matrix.variant.edit }}
+          build-args: ${{ matrix.variant.build_args }}
+          cache-from: type=gha,scope=${{ matrix.variant.name }}
+          cache-to: type=gha,mode=max,scope=${{ matrix.variant.name }}

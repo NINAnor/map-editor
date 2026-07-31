@@ -29,7 +29,23 @@ EXPOSE 5173
 CMD ["pnpm", "run", "dev"]
 
 
-FROM nginx:stable-alpine-slim
+FROM nginx:stable-alpine-slim AS nginx
 
 COPY nginx/default.conf.template /etc/nginx/templates/
 COPY --from=build /app/dist /var/www/
+
+
+FROM denoland/deno:2 AS server
+
+WORKDIR /app
+
+COPY deno.json package.json ./
+COPY src/server.ts src/map-config.ts src/
+COPY src/schemas/ src/schemas/
+
+RUN deno cache --sloppy-imports src/server.ts
+
+EXPOSE 8080
+ENV PORT=8080
+
+CMD ["run", "--sloppy-imports", "--allow-net", "--allow-env=PORT", "src/server.ts"]

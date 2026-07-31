@@ -13,6 +13,7 @@
     "generate-schema": "deno run --sloppy-imports src/cli.ts schema > schemas/map-config.schema.json",
     "cli": "deno run --sloppy-imports src/cli.ts",
     "cli:build": "deno compile --sloppy-imports --output dist/nina-map-cli src/cli.ts",
+    "server": "deno run --sloppy-imports --allow-net --allow-env=PORT src/server.ts",
     "prepare": "husky"
   },
   "dependencies": {
