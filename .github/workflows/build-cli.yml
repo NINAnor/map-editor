@@ -14,7 +14,7 @@ jobs:
       matrix:
         include:
           - target: x86_64-unknown-linux-gnu
-            output: nina-map-validate-linux-x86_64
+            output: nina-map-cli-linux-x86_64
 
     steps:
       - uses: actions/checkout@v4
@@ -24,7 +24,7 @@ jobs:
           deno-version: v2.x
 
       - name: Compile
-        run: deno compile --sloppy-imports --target ${{ matrix.target }} --output dist/${{ matrix.output }} src/validate.ts
+        run: deno compile --sloppy-imports --target ${{ matrix.target }} --output dist/${{ matrix.output }} src/cli.ts
 
       - uses: actions/upload-artifact@v4
         with:

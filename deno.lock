@@ -1,0 +1,136 @@
+{
+  "version": "5",
+  "specifiers": {
+    "jsr:@cliffy/command@1": "1.2.1",
+    "jsr:@cliffy/flags@1.2.1": "1.2.1",
+    "jsr:@cliffy/internal@1.2.1": "1.2.1",
+    "jsr:@cliffy/table@1.2.1": "1.2.1",
+    "jsr:@deno/installer-shell-setup@*": "0.3.4",
+    "jsr:@std/fmt@^1.0.10": "1.0.10",
+    "jsr:@std/text@^1.0.19": "1.0.19",
+    "npm:zod@*": "4.4.3"
+  },
+  "jsr": {
+    "@cliffy/command@1.2.1": {
+      "integrity": "b7b017c81560d96580ea810c8564566884d8194416f6fc06bfdc8846e8fd590f",
+      "dependencies": [
+        "jsr:@cliffy/flags",
+        "jsr:@cliffy/internal",
+        "jsr:@cliffy/table",
+        "jsr:@std/fmt",
+        "jsr:@std/text"
+      ]
+    },
+    "@cliffy/flags@1.2.1": {
+      "integrity": "10034920ef7595db586fecec5a3b10a4ec800c513cbbc368414cd748dac706fb",
+      "dependencies": [
+        "jsr:@cliffy/internal",
+        "jsr:@std/text"
+      ]
+    },
+    "@cliffy/internal@1.2.1": {
+      "integrity": "e398f41c6839d3d4d249c963bfcb1058013091425926d53a3cb482b1ca70684b"
+    },
+    "@cliffy/table@1.2.1": {
+      "integrity": "be333e62f2c754f8bf75a38c8177515b152040572c9f75298e9bcef1314b82ff",
+      "dependencies": [
+        "jsr:@std/fmt"
+      ]
+    },
+    "@deno/installer-shell-setup@0.3.4": {
+      "integrity": "48665d1a737d487cce6874bc97bba70a5aeffa7053aca3f60df93c6fab8963b4"
+    },
+    "@std/fmt@1.0.10": {
+      "integrity": "90dfba288802ac6de82fb31d0917eb9e4450b9925b954d5e51fc29ac07419db5"
+    },
+    "@std/text@1.0.19": {
+      "integrity": "003a0e032d360e8c3a4e0410fb792c77a66bd6553fee9d60c6ec1bce30d29223"
+    }
+  },
+  "npm": {
+    "zod@4.4.3": {
+      "integrity": "sha512-ytENFjIJFl2UwYglde2jchW2Hwm4GJFLDiSXWdTrJQBIN9Fcyp7n4DhxJEiWNAJMV1/BqWfW/kkg71UDcHJyTQ=="
+    }
+  },
+  "workspace": {
+    "dependencies": [
+      "npm:zod@*"
+    ],
+    "packageJson": {
+      "dependencies": [
+        "npm:@biomejs/biome@^2.4.15",
+        "npm:@custom-react-hooks/use-element-size@^1.5.1",
+        "npm:@deck.gl/core@^9.3.2",
+        "npm:@deck.gl/layers@^9.3.2",
+        "npm:@deck.gl/mapbox@^9.3.2",
+        "npm:@dnd-kit/core@^6.3.1",
+        "npm:@dnd-kit/sortable@10",
+        "npm:@dnd-kit/utilities@^3.2.2",
+        "npm:@dr.pogodin/react-helmet@^3.1.1",
+        "npm:@fortawesome/fontawesome-svg-core@^7.2.0",
+        "npm:@fortawesome/free-regular-svg-icons@^7.2.0",
+        "npm:@fortawesome/free-solid-svg-icons@^7.2.0",
+        "npm:@fortawesome/react-fontawesome@^3.3.1",
+        "npm:@geoarrow/deck.gl-layers@~0.3.2",
+        "npm:@geoarrow/geoparquet-wasm@0.2.0-beta.5",
+        "npm:@headless-tree/core@^1.6.3",
+        "npm:@headless-tree/react@^1.6.3",
+        "npm:@headlessui/react@^2.2.10",
+        "npm:@hookform/resolvers@^5.2.2",
+        "npm:@maplibre/maplibre-gl-geocoder@^1.9.4",
+        "npm:@mdxeditor/editor@4",
+        "npm:@plausible-analytics/tracker@~0.4.5",
+        "npm:@sentry/react@^10.52.0",
+        "npm:@tailwindcss/forms@~0.5.11",
+        "npm:@tailwindcss/typography@~0.5.19",
+        "npm:@tailwindcss/vite@^4.3.0",
+        "npm:@tanstack/react-form@^1.31.0",
+        "npm:@tanstack/react-query-devtools@^5.100.9",
+        "npm:@tanstack/react-query@^5.100.9",
+        "npm:@tanstack/react-router-devtools@^1.166.13",
+        "npm:@tanstack/react-router@^1.169.2",
+        "npm:@tanstack/router-plugin@^1.167.35",
+        "npm:@types/node@^25.6.2",
+        "npm:@types/react-dom@^19.2.3",
+        "npm:@types/react-helmet@^6.1.11",
+        "npm:@types/react-map-gl@^6.1.8",
+        "npm:@types/react@^19.2.14",
+        "npm:@vitejs/plugin-react@^6.0.1",
+        "npm:apache-arrow@^21.1.0",
+        "npm:axios@^1.16.0",
+        "npm:classnames@^2.5.1",
+        "npm:daisyui@^5.5.19",
+        "npm:hex-rgb@5",
+        "npm:husky@^9.1.7",
+        "npm:i18next-http-backend@^3.0.6",
+        "npm:i18next@^26.0.10",
+        "npm:immer@^10.2.0",
+        "npm:lint-staged@^16.4.0",
+        "npm:maplibre-gl@^5.24.0",
+        "npm:nanoid@^5.1.11",
+        "npm:parquet-wasm@~0.7.1",
+        "npm:pmtiles@^4.4.1",
+        "npm:react-colorful@^5.7.0",
+        "npm:react-dom@^19.2.6",
+        "npm:react-dropzone@^14.4.1",
+        "npm:react-hook-form@^7.75.0",
+        "npm:react-i18next@^17.0.7",
+        "npm:react-map-gl@^8.1.1",
+        "npm:react-markdown-autolink@^0.0.2",
+        "npm:react-markdown@^10.1.0",
+        "npm:react-responsive@^10.0.1",
+        "npm:react-toastify@^11.1.0",
+        "npm:react@^19.2.6",
+        "npm:reselect@^5.1.1",
+        "npm:tailwindcss@^4.3.0",
+        "npm:typescript@~5.7.3",
+        "npm:vite-plugin-dts@^4.5.4",
+        "npm:vite-plugin-lib-inject-css@^2.2.2",
+        "npm:vite-plugin-wasm@^3.6.0",
+        "npm:vite@^8.1.4",
+        "npm:zod@^4.4.3",
+        "npm:zustand@^5.0.13"
+      ]
+    }
+  }
+}

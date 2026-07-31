@@ -10,9 +10,9 @@
     "lint:fix": "biome check --write .",
     "format": "biome format --write .",
     "preview": "vite preview",
-    "generate-schema": "pnpx vite-node scripts/generate-schema.ts",
-    "validate": "deno run src/validate.ts",
-    "validate:build": "deno compile --sloppy-imports --output dist/nina-map-validate src/validate.ts",
+    "generate-schema": "deno run --sloppy-imports src/cli.ts schema > schemas/map-config.schema.json",
+    "cli": "deno run --sloppy-imports src/cli.ts",
+    "cli:build": "deno compile --sloppy-imports --output dist/nina-map-cli src/cli.ts",
     "prepare": "husky"
   },
   "dependencies": {

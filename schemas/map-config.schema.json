@@ -1,7 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Map Configuration Schema",
-  "description": "Schema for nina-maps map configuration",
+  "title": "Nina Maps Configuration",
+  "description": "Configuration schema for a nina-maps map.",
+  "version": "0.1.3",
   "type": "object",
   "properties": {
     "title": {
