@@ -1,8 +1,17 @@
 services:
   app:
-    build: .
+    build:
+      context: .
+      target: nginx
     ports:
-      - '8000:80'
+      - "8000:80"
+
+  server:
+    build:
+      context: .
+      target: server
+    ports:
+      - "8001:8080"
 
   titiler:
     image: ghcr.io/ninanor/titiler-app-titiler:next
@@ -13,7 +22,7 @@ services:
       - FORWARDED_ALLOW_IPS=*
       - REDIS_HOST=redis
     ports:
-      - '8989:80'
+      - "8989:80"
 
   redis:
     image: redis

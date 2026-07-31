@@ -35,7 +35,7 @@ COPY nginx/default.conf.template /etc/nginx/templates/
 COPY --from=build /app/dist /var/www/
 
 
-FROM denoland/deno:2 AS server
+FROM denoland/deno:2.9.4 AS server
 
 WORKDIR /app
 
