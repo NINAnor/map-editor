@@ -21,12 +21,12 @@ export const FooterSchema = z.object({
 });
 
 export const MapSettingsSchema = z.object({
-  titiler_api_url: z.string(),
-  theme: z.string(),
-  language: z.string(),
+  titiler_api_url: z.string().default('/titiler'),
+  theme: z.string().default('nina'),
+  language: z.string().default('en'),
   footer: FooterSchema.optional(),
-  menuOrientation: z.enum(['horizontal', 'vertical']).optional(),
-  exclusiveLayers: z.boolean().optional(),
+  menuOrientation: z.enum(['horizontal', 'vertical']).default('vertical'),
+  exclusiveLayers: z.boolean().default(false),
 });
 
 export const MapMetaSchema = z.object({
@@ -44,9 +44,9 @@ export const BaseMapStyleSchema = z.object({
 
 export const ViewStateSchema = z
   .object({
-    longitude: z.number().min(-180).max(180).optional(),
-    latitude: z.number().min(-90).max(90).optional(),
-    zoom: z.number().min(0).max(24).optional(),
+    longitude: z.number().min(-180).max(180).default(0),
+    latitude: z.number().min(-90).max(90).default(0),
+    zoom: z.number().min(0).max(24).default(1),
     bearing: z.number().min(-180).max(180).optional(),
     pitch: z.number().min(0).max(85).optional(),
     padding: z
@@ -62,12 +62,12 @@ export const ViewStateSchema = z
 
 export const MapConfigSchema = MapMetaSchema.extend({
   id: z.string(),
-  baseMap: z.string(),
-  styles: z.record(z.string(), z.string()).optional(),
-  layerOrder: z.array(z.string()),
+  baseMap: z.enum(['positron', 'voyager', 'darkMatter', 'toporaster']).or(z.string()).describe('The base map style to use. Must be a key present in the styles record.'),
+  styles: z.record(z.string(), z.url()).optional(),
+  layerOrder: z.array(z.string()).describe('An array of layer IDs in the order they should be rendered. Each ID must reference an item of type "layer" in the items record.'),
   viewState: ViewStateSchema,
   items: TreeSchema.nullable(),
-  expandedItems: z.array(z.string()),
+  expandedItems: z.array(z.string()).describe('An array of item IDs that should be expanded in the layer tree. Each ID must reference an item of type "folder" in the items record.'),
   config: MapSettingsSchema,
 }).superRefine((data, ctx) => {
   // baseMap must be a key present in the styles record
@@ -109,6 +109,23 @@ export const MapConfigSchema = MapMetaSchema.extend({
         code: "custom",
         message: `layerOrder entry '${id}' must be a layer, not a folder`,
         path: ['layerOrder', index],
+      });
+    }
+  });
+
+  // expandedItems entries must reference existing folder-type items
+  data.expandedItems.forEach((id, index) => {
+    if (!(id in data.items!)) {
+      ctx.addIssue({
+        code: "custom",
+        message: `expandedItems entry '${id}' does not exist in items`,
+        path: ['expandedItems', index],
+      });
+    } else if (data.items![id].type !== 'folder') {
+      ctx.addIssue({
+        code: "custom",
+        message: `expandedItems entry '${id}' must be a folder, not a layer`,
+        path: ['expandedItems', index],
       });
     }
   });
