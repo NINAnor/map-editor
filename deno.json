@@ -1,0 +1,9 @@
+{
+  "nodeModulesDir": "none",
+  "imports": {
+    "zod": "npm:zod"
+  },
+  "compilerOptions": {
+    "lib": ["deno.ns", "dom", "esnext"]
+  }
+}
