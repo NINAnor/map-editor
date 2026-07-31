@@ -47,7 +47,7 @@
     "@tanstack/react-router": "^1.169.2",
     "@tanstack/react-router-devtools": "^1.166.13",
     "apache-arrow": "^21.1.0",
-    "axios": "^1.16.0",
+    "axios": "^1.19.0",
     "classnames": "^2.5.1",
     "hex-rgb": "^5.0.0",
     "i18next": "^26.0.10",
