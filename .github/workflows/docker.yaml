@@ -22,14 +22,14 @@ jobs:
           - name: public
             image_suffix: ""
             tag_suffix: "-readonly"
-            target: ""
+            target: "nginx"
             build_args: |
               VITE_DEFAULT_CONFIGURATION=https://s3-ext-1.nina.no/dms/maps/main/maps.json
               VITE_HIDE_EDIT_BUTTON=true
           - name: internal
             image_suffix: ""
             tag_suffix: ""
-            target: ""
+            target: "nginx"
             build_args: |
               VITE_DEFAULT_CONFIGURATION=https://s3-ext-1.nina.no/dms/maps/main/maps.json
               VITE_HIDE_EDIT_BUTTON=false
