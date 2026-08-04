@@ -63,7 +63,7 @@ export const ViewStateSchema = z
 export const MapConfigSchema = MapMetaSchema.extend({
   id: z.string(),
   baseMap: z.enum(['positron', 'voyager', 'darkMatter', 'toporaster']).or(z.string()).describe('The base map style to use. Must be a key present in the styles record.'),
-  styles: z.record(z.string(), z.url()).optional(),
+  styles: z.record(z.string(), z.url().or(z.string())).optional(),
   layerOrder: z.array(z.string()).describe('An array of layer IDs in the order they should be rendered. Each ID must reference an item of type "layer" in the items record.'),
   viewState: ViewStateSchema,
   items: TreeSchema.nullable(),

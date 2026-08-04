@@ -5,7 +5,7 @@ import { z } from 'zod';
  */
 
 export const VectorFillValueSchema = z.object({
-  value: z.string(),
+  value: z.string().or(z.number()),
   description: z.string().optional(),
   color: z.string(),
   borderColor: z.string().optional(),
@@ -24,7 +24,7 @@ export const VectorFillLegendSchema = z
   });
 
 export const VectorLineValueSchema = z.object({
-  value: z.string(),
+  value: z.string().or(z.number()),
   description: z.string().optional(),
   color: z.string(),
   opacity: z.number().optional(),
@@ -44,7 +44,7 @@ export const VectorLineLegendSchema = z
   });
 
 export const VectorCircleValueSchema = z.object({
-  value: z.string(),
+  value: z.string().or(z.number()),
   description: z.string().optional(),
   color: z.string(),
   opacity: z.number().optional(),

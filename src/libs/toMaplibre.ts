@@ -19,7 +19,7 @@ import type {
 /**
  * Generic type for extracting specific values from vector legend value objects
  */
-type ValueExtractor<T> = (value: T) => [string, unknown];
+type ValueExtractor<T> = (value: T) => [string | number, unknown];
 
 /**
  * Union type for all vector legend value types
