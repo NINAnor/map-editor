@@ -9,6 +9,7 @@ import MediaQuery from 'react-responsive';
 import { TABS } from '../config';
 import { useAppStore } from '../hooks/app';
 import { useUIActions } from '../hooks/ui';
+import { MapIcon } from './MapIcon';
 
 export function TitleTabs({
   routePath,
@@ -55,15 +56,7 @@ export function TitleTabs({
               <FontAwesomeIcon icon={faTimes} />
             </button>
           </MediaQuery>
-          {icon && (
-            <img
-              src={icon}
-              className={classNames({
-                'max-w-full max-h-24': isVertical,
-                'max-w-20 max-h-20': !isVertical,
-              })}
-            />
-          )}
+          {icon && <MapIcon icon={icon} size={isVertical ? 'xl' : 'lg'} />}
           <div
             className={classNames({
               grow: !isVertical,
