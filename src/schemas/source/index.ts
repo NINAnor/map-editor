@@ -32,7 +32,6 @@ export const LayerConfigSchema = z.union([
   WMTSSourceSchema,
   WMSSourceSchema,
   ParquetSourceSchema,
-  z.record(z.string(), z.unknown()), // For generic Partial<Source>
 ]);
 
 /**
