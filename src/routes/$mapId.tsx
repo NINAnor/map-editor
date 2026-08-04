@@ -2,9 +2,11 @@ import { createFileRoute, ErrorComponent, type ErrorComponentProps, Link, Outlet
 import { AxiosError } from 'axios';
 import { Fragment, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { z } from 'zod';
 import { Head } from '../components/Head';
 import { Header } from '../components/Header';
 import { Footer } from '../components/HomeFooter';
+import { ZodErrorDisplay } from '../components/ZodErrorDisplay';
 import { DEFAULT_LANG, mapConfigQueryOptions, storeConfigQueryOptions } from '../config';
 import { useAppStore } from '../hooks/app';
 import { useUIActions, useUIStore } from '../hooks/ui';
@@ -27,7 +29,24 @@ export const Route = createFileRoute('/$mapId')({
 });
 
 function ConfigErrorComponent({ error }: ErrorComponentProps) {
-  if (error instanceof AxiosError || MapNotFoundError) {
+  if (error instanceof z.ZodError) {
+    return (
+      <div className="min-h-screen bg-base-100 flex flex-col">
+        <Header icon="" />
+        <main className="container mx-auto px-4 py-8 grow">
+          <ZodErrorDisplay error={error} title="Invalid map configuration" className="max-w-4xl mx-auto" />
+          <div className="flex justify-center mt-5">
+            <Link to="/" className="btn btn-primary">
+              Go back
+            </Link>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (error instanceof AxiosError || error instanceof MapNotFoundError) {
     return (
       <div className="min-h-screen bg-base-100 flex flex-col">
         <Header icon="" />

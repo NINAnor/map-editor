@@ -10,7 +10,9 @@ import {
 import { AxiosError } from 'axios';
 import { Fragment, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { z } from 'zod';
 import { Head } from '../components/Head';
+import { ZodErrorDisplay } from '../components/ZodErrorDisplay';
 import { DEFAULT_LANG, editorSearchSchema, mapConfigQueryOptions } from '../config';
 import { useAppStore } from '../hooks/app';
 import { useUIActions, useUIStore } from '../hooks/ui';
@@ -41,6 +43,23 @@ function ConfigErrorComponent({ error }: ErrorComponentProps) {
   useEffect(() => {
     queryErrorResetBoundary.reset();
   }, [queryErrorResetBoundary]);
+
+  if (error instanceof z.ZodError) {
+    return (
+      <div className="p-4">
+        <ZodErrorDisplay error={error} title="Invalid map configuration" />
+        <button
+          type="button"
+          className="btn btn-primary mt-4"
+          onClick={() => {
+            router.invalidate().then().catch(console.error);
+          }}
+        >
+          Retry
+        </button>
+      </div>
+    );
+  }
 
   if (error instanceof AxiosError) {
     return <div>{error.message}</div>;

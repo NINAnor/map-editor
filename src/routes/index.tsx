@@ -1,12 +1,26 @@
 import { useSuspenseQuery } from '@tanstack/react-query';
 import { createFileRoute, ErrorComponent, type ErrorComponentProps, Link } from '@tanstack/react-router';
 import { AxiosError } from 'axios';
+import { z } from 'zod';
 import { Header } from '../components/Header';
 import { Footer } from '../components/HomeFooter';
+import { ZodErrorDisplay } from '../components/ZodErrorDisplay';
 import { storeConfigQueryOptions } from '../config';
 import { useUIStore } from '../hooks/ui';
 
 function ConfigErrorComponent({ error }: ErrorComponentProps) {
+  if (error instanceof z.ZodError) {
+    return (
+      <div className="min-h-screen bg-base-100 flex flex-col">
+        <Header icon="" />
+        <main className="container mx-auto px-4 py-8 grow">
+          <ZodErrorDisplay error={error} title="Invalid configuration" className="max-w-4xl mx-auto" />
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   if (error instanceof AxiosError) {
     return (
       <div className="min-h-screen bg-base-100 flex flex-col">
