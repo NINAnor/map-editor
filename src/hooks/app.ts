@@ -253,9 +253,11 @@ const maplibreMapSelector = createAppSelector(
   state => state.config.titiler_api_url,
   state => state.layerOrder,
   (viewState: Partial<ViewState>, layers: LayerWithId[], titiler_api_url: string, layerOrder: string[]) => {
+    const { sources, errors } = toMaplibreSources(layers, titiler_api_url);
     return {
       initialViewState: viewState,
-      sources: toMaplibreSources(layers, titiler_api_url),
+      sources,
+      errors,
       // TODO: only vector layers should be interactive
       interactiveLayerIds: layerOrder,
     };

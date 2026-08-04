@@ -1,6 +1,6 @@
 import hexRgb from 'hex-rgb';
 import type { SourceProps } from 'react-map-gl/maplibre';
-import { toast } from 'react-toastify';
+import type { LayerErrorInput } from '../hooks/errors';
 import type {
   LayerWithId,
   PMTileSource,
@@ -586,6 +586,14 @@ function buildWMSLayer(layer: LayerWithId): SourceProps {
 }
 
 /**
+ * Result of converting layers to MapLibre sources
+ */
+export interface ToMaplibreResult {
+  sources: SourceProps[];
+  errors: LayerErrorInput[];
+}
+
+/**
  * Converts a layer configuration to MapLibre source format
  * @param layer - The layer to convert
  * @param _index - Array index (unused)
@@ -598,17 +606,17 @@ function layerToSource(
   _index: number,
   _array: LayerWithId[],
   titiler_api_url: string,
-): SourceProps | null {
+): { source: SourceProps | null; error?: LayerErrorInput } {
   try {
     // Validate input
     if (!layer?.id) {
       console.warn('Layer missing required id property');
-      return null;
+      return { source: null };
     }
 
     if (!layer.layer) {
       console.warn(`Layer ${layer.id} missing layer configuration`);
-      return null;
+      return { source: null };
     }
 
     // Handle TiTiler raster sources
@@ -616,43 +624,45 @@ function layerToSource(
       if (!titiler_api_url) {
         throw new Error(`TiTiler API URL required for raster layer ${layer.id}`);
       }
-      return buildRasterLayer(layer, titiler_api_url);
+      return { source: buildRasterLayer(layer, titiler_api_url) };
     }
 
     // Handle PMTiles vector sources
     if ('pmtiles' === layer.layer.type) {
-      return buildPMTilesLayer(layer);
+      return { source: buildPMTilesLayer(layer) };
     }
 
     // Handle standard raster sources
     if ('raster' === layer.layer.type) {
-      return buildStandardRasterLayer(layer);
+      return { source: buildStandardRasterLayer(layer) };
     }
 
     // Handle WMTS (Web Map Tile Service) sources
     if ('wmts' === layer.layer.type) {
-      return buildWMTSLayer(layer);
+      return { source: buildWMTSLayer(layer) };
     }
 
     // Handle WMS (Web Map Service) sources
     if ('wms' === layer.layer.type) {
-      return buildWMSLayer(layer);
+      return { source: buildWMSLayer(layer) };
     }
 
     // Skip parquet layers - they are handled by DeckGL overlay
     if ('parquet' === layer.layer.type) {
       console.debug(`Skipping parquet layer ${layer.id} - handled by DeckGL overlay`);
-      return null;
+      return { source: null };
     }
 
     // Log unsupported layer types for debugging
     console.warn(`Unsupported layer type for layer ${layer.id}:`, Object.keys(layer.layer));
-    return null;
+    return { source: null };
   } catch (error) {
     const message = error instanceof Error ? error.message : String(error);
-    toast.error(`Layer "${layer.name}" failed to load: ${message}`);
     console.error(`Failed to convert layer ${layer.id} to MapLibre source:`, error);
-    return null;
+    return {
+      source: null,
+      error: { layerId: layer.id, layerName: layer.name, message },
+    };
   }
 }
 
@@ -660,22 +670,24 @@ function layerToSource(
  * Converts an array of layer configurations to MapLibre source format
  * @param layers - Array of layer configurations to convert
  * @param titiler_api_url - Base URL for TiTiler API (required for raster layers)
- * @returns Array of MapLibre source configurations
+ * @returns Object containing array of MapLibre source configurations and any errors
  */
-export function toMaplibreSources(layers: LayerWithId[], titiler_api_url: string): SourceProps[] {
+export function toMaplibreSources(layers: LayerWithId[], titiler_api_url: string): ToMaplibreResult {
   if (!Array.isArray(layers)) {
     console.warn('toMaplibreSources: Expected array of layers, received:', typeof layers);
-    return [];
+    return { sources: [], errors: [] };
   }
 
   if (!titiler_api_url) {
     console.warn('toMaplibreSources: TiTiler API URL not provided - raster layers will fail');
   }
 
-  const sources = layers
-    .map((layer, index, array) => layerToSource(layer, index, array, titiler_api_url))
-    .filter((source): source is SourceProps => source !== null);
+  const results = layers.map((layer, index, array) => layerToSource(layer, index, array, titiler_api_url));
+
+  const sources = results.map(r => r.source).filter((source): source is SourceProps => source !== null);
+
+  const errors = results.map(r => r.error).filter((error): error is LayerErrorInput => error !== undefined);
 
   console.debug(`Converted ${sources.length}/${layers.length} layers to MapLibre sources`);
-  return sources;
+  return { sources, errors };
 }

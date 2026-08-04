@@ -12,6 +12,7 @@ import {
   Source,
 } from 'react-map-gl/maplibre';
 import { useAppStore, useBaseMap, useLayerExcludeFields, useLayers, useMaplibreMapConf } from '../hooks/app';
+import { useErrorStore } from '../hooks/errors';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import MediaQuery from 'react-responsive';
@@ -23,14 +24,22 @@ import SidebarWidget from './SidebarWidget';
 
 export default function Map() {
   const basemap = useBaseMap();
-  const { initialViewState, sources, interactiveLayerIds } = useMaplibreMapConf();
+  const { initialViewState, sources, errors, interactiveLayerIds } = useMaplibreMapConf();
   const layers = useLayers();
   const excludeFields = useLayerExcludeFields();
+  const addError = useErrorStore(state => state.addError);
   const [popup, setInfoPopup] = useState<PopupInfo | null>(null);
   const popupRef = useRef(popup);
   popupRef.current = popup;
 
   const layerOrder = useAppStore(state => state.layerOrder);
+
+  // Display layer conversion errors
+  useEffect(() => {
+    for (const error of errors) {
+      addError(error);
+    }
+  }, [errors, addError]);
 
   // Remove features from hidden layers; close popup if none remain
   useEffect(() => {

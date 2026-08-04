@@ -4,9 +4,10 @@ import { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useTranslation } from 'react-i18next';
 import { toast } from 'react-toastify';
+import { z } from 'zod';
 import { SettingsForm } from '../../../../components/forms/SettingsForm';
 import { useAppActions, useAppStore } from '../../../../hooks/app';
-import type { MapConfig } from '../../../../types';
+import { MapConfigSchema } from '../../../../types';
 
 export const Route = createFileRoute('/editor/_layout/edit/settings')({
   component: RouteComponent,
@@ -40,12 +41,27 @@ function RouteComponent() {
 
     setIsLoading(true);
     try {
-      const response = await axios.get<MapConfig>(configUrl);
-      const config = response.data;
+      const response = await axios.get(configUrl);
+      const result = MapConfigSchema.safeParse(response.data);
+      if (!result.success) {
+        const errorMessage = z.prettifyError(result.error);
+        console.error('Config validation failed:', result.error);
+        toast.error(
+          <div>
+            <strong>{t('config-load-error')}</strong>
+            <pre className="text-xs mt-2 whitespace-pre-wrap">{errorMessage}</pre>
+          </div>,
+          { autoClose: false },
+        );
+        return;
+      }
+      const config = result.data;
       console.debug('Loaded config from URL:', config);
 
-      // TODO: set configurations in a safer way!
-      useAppStore.setState(() => config);
+      useAppStore.setState(state => ({
+        ...config,
+        actions: state.actions,
+      }));
       setConfigUrl('');
       toast.success(t('config-loaded-success'));
     } catch (error) {
@@ -65,11 +81,26 @@ function RouteComponent() {
         reader.onabort = () => console.warn('file reading was aborted');
         reader.onerror = () => console.error('file reading has failed');
         reader.onload = () => {
-          const config = JSON.parse(reader.result as string) as MapConfig;
+          const result = MapConfigSchema.safeParse(JSON.parse(reader.result as string));
+          if (!result.success) {
+            const errorMessage = z.prettifyError(result.error);
+            console.error('Config validation failed:', result.error);
+            toast.error(
+              <div>
+                <strong>{t('config-load-error')}</strong>
+                <pre className="text-xs mt-2 whitespace-pre-wrap">{errorMessage}</pre>
+              </div>,
+              { autoClose: false },
+            );
+            return;
+          }
+          const config = result.data;
           console.debug(config);
 
-          // TODO: set configurations in a safer way!
-          useAppStore.setState(() => config);
+          useAppStore.setState(state => ({
+            ...config,
+            actions: state.actions,
+          }));
           toast.success(t('config-loaded-success'));
         };
         reader.readAsText(file);
