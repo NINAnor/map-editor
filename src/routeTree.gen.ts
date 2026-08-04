@@ -32,7 +32,6 @@ import { Route as MapIdLayoutViewManageRouteImport } from './routes/$mapId/_layo
 import { Route as MapIdLayoutViewLegendRouteImport } from './routes/$mapId/_layout/_view/legend'
 import { Route as MapIdLayoutViewDescriptionRouteImport } from './routes/$mapId/_layout/_view/description'
 import { Route as MapIdLayoutViewBasemapRouteImport } from './routes/$mapId/_layout/_view/basemap'
-import { Route as EditorLayoutEditLayersDmsRouteImport } from './routes/editor/_layout/edit/layers.dms'
 import { Route as EditorLayoutEditLayersAddRouteImport } from './routes/editor/_layout/edit/layers.add'
 import { Route as EditorLayoutEditLayersLayerIdRouteImport } from './routes/editor/_layout/edit/layers.$layerId'
 import { Route as EditorLayoutEditFoldersAddRouteImport } from './routes/editor/_layout/edit/folders.add'
@@ -157,12 +156,6 @@ const MapIdLayoutViewBasemapRoute = MapIdLayoutViewBasemapRouteImport.update({
   path: '/basemap',
   getParentRoute: () => MapIdLayoutViewRoute,
 } as any)
-const EditorLayoutEditLayersDmsRoute =
-  EditorLayoutEditLayersDmsRouteImport.update({
-    id: '/layers/dms',
-    path: '/layers/dms',
-    getParentRoute: () => EditorLayoutEditRoute,
-  } as any)
 const EditorLayoutEditLayersAddRoute =
   EditorLayoutEditLayersAddRouteImport.update({
     id: '/layers/add',
@@ -240,7 +233,6 @@ export interface FileRoutesByFullPath {
   '/editor/edit/folders/add': typeof EditorLayoutEditFoldersAddRoute
   '/editor/edit/layers/$layerId': typeof EditorLayoutEditLayersLayerIdRoute
   '/editor/edit/layers/add': typeof EditorLayoutEditLayersAddRoute
-  '/editor/edit/layers/dms': typeof EditorLayoutEditLayersDmsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -267,7 +259,6 @@ export interface FileRoutesByTo {
   '/editor/edit/folders/add': typeof EditorLayoutEditFoldersAddRoute
   '/editor/edit/layers/$layerId': typeof EditorLayoutEditLayersLayerIdRoute
   '/editor/edit/layers/add': typeof EditorLayoutEditLayersAddRoute
-  '/editor/edit/layers/dms': typeof EditorLayoutEditLayersDmsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -302,7 +293,6 @@ export interface FileRoutesById {
   '/editor/_layout/edit/folders/add': typeof EditorLayoutEditFoldersAddRoute
   '/editor/_layout/edit/layers/$layerId': typeof EditorLayoutEditLayersLayerIdRoute
   '/editor/_layout/edit/layers/add': typeof EditorLayoutEditLayersAddRoute
-  '/editor/_layout/edit/layers/dms': typeof EditorLayoutEditLayersDmsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -334,7 +324,6 @@ export interface FileRouteTypes {
     | '/editor/edit/folders/add'
     | '/editor/edit/layers/$layerId'
     | '/editor/edit/layers/add'
-    | '/editor/edit/layers/dms'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -361,7 +350,6 @@ export interface FileRouteTypes {
     | '/editor/edit/folders/add'
     | '/editor/edit/layers/$layerId'
     | '/editor/edit/layers/add'
-    | '/editor/edit/layers/dms'
   id:
     | '__root__'
     | '/'
@@ -395,7 +383,6 @@ export interface FileRouteTypes {
     | '/editor/_layout/edit/folders/add'
     | '/editor/_layout/edit/layers/$layerId'
     | '/editor/_layout/edit/layers/add'
-    | '/editor/_layout/edit/layers/dms'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -567,13 +554,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MapIdLayoutViewBasemapRouteImport
       parentRoute: typeof MapIdLayoutViewRoute
     }
-    '/editor/_layout/edit/layers/dms': {
-      id: '/editor/_layout/edit/layers/dms'
-      path: '/layers/dms'
-      fullPath: '/editor/edit/layers/dms'
-      preLoaderRoute: typeof EditorLayoutEditLayersDmsRouteImport
-      parentRoute: typeof EditorLayoutEditRoute
-    }
     '/editor/_layout/edit/layers/add': {
       id: '/editor/_layout/edit/layers/add'
       path: '/layers/add'
@@ -712,7 +692,6 @@ interface EditorLayoutEditRouteChildren {
   EditorLayoutEditFoldersAddRoute: typeof EditorLayoutEditFoldersAddRoute
   EditorLayoutEditLayersLayerIdRoute: typeof EditorLayoutEditLayersLayerIdRoute
   EditorLayoutEditLayersAddRoute: typeof EditorLayoutEditLayersAddRoute
-  EditorLayoutEditLayersDmsRoute: typeof EditorLayoutEditLayersDmsRoute
 }
 
 const EditorLayoutEditRouteChildren: EditorLayoutEditRouteChildren = {
@@ -725,7 +704,6 @@ const EditorLayoutEditRouteChildren: EditorLayoutEditRouteChildren = {
   EditorLayoutEditFoldersAddRoute: EditorLayoutEditFoldersAddRoute,
   EditorLayoutEditLayersLayerIdRoute: EditorLayoutEditLayersLayerIdRoute,
   EditorLayoutEditLayersAddRoute: EditorLayoutEditLayersAddRoute,
-  EditorLayoutEditLayersDmsRoute: EditorLayoutEditLayersDmsRoute,
 }
 
 const EditorLayoutEditRouteWithChildren =

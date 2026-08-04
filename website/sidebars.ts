@@ -41,13 +41,7 @@ const sidebars: SidebarsConfig = {
       type: 'category',
       label: 'Editor Guide',
       link: { type: 'doc', id: 'editor/editor' },
-      items: [
-        'editor/managing-layers',
-        'editor/managing-folders',
-        'editor/styling-layers',
-        'editor/map-settings',
-        'editor/dms-import',
-      ],
+      items: ['editor/managing-layers', 'editor/managing-folders', 'editor/styling-layers', 'editor/map-settings'],
     },
   ],
 };

@@ -558,9 +558,10 @@ function buildWMSLayer(layer: LayerWithId): SourceProps {
 
     // Add any additional WMS parameters
     if (l.wms.additionalParams) {
-      Object.entries(l.wms.additionalParams).forEach(([key, value]) => {
+      const params = l.wms.additionalParams as Record<string, string>;
+      for (const [key, value] of Object.entries(params)) {
         wmsUrl.searchParams.set(key, value);
-      });
+      }
     }
 
     const result = {

@@ -51,7 +51,6 @@
   "rescale-values": "Rescale values",
   "rescale-description": "Array of min,max values for each band (e.g., \"0,255\")",
   "exclusive-layers": "Exclusive Layers",
-  "from-DMS": "From DMS",
   "popup-settings": "Popup Settings",
   "exclude-fields-help": "Specify field names to hide from the info popup when clicking features.",
   "add-exclude-field": "Add Excluded Field"
