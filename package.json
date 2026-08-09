@@ -54,7 +54,7 @@
     "i18next-http-backend": "^3.0.6",
     "immer": "^10.2.0",
     "maplibre-gl": "^5.24.0",
-    "nanoid": "^5.1.11",
+    "nanoid": "^5.1.16",
     "parquet-wasm": "^0.7.1",
     "pmtiles": "^4.4.1",
     "react": "^19.2.6",
