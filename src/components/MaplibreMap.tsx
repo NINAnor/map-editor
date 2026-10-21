@@ -1,4 +1,5 @@
-import maplibregl from 'maplibre-gl';
+import { addProtocol, removeProtocol, setWorkerUrl } from 'maplibre-gl';
+import maplibreWorkerUrl from 'maplibre-gl/dist/maplibre-gl-worker.mjs?worker&url';
 import { Protocol } from 'pmtiles';
 import {
   type ErrorEvent,
@@ -29,6 +30,10 @@ import DeckGLOverlay from './DeckGLOverlay';
 import GeocoderControl from './GeocoderControl';
 import { Popup, type PopupInfo } from './popup';
 import SidebarWidget from './SidebarWidget';
+
+// MapLibre GL JS v6 loads its worker from a file next to the library script.
+// With a bundler that path no longer resolves, so point it at the bundled worker.
+setWorkerUrl(maplibreWorkerUrl);
 
 export default function Map() {
   const basemap = useBaseMap();
@@ -65,9 +70,9 @@ export default function Map() {
 
   useEffect(() => {
     const protocol = new Protocol();
-    maplibregl.addProtocol('pmtiles', protocol.tile);
+    addProtocol('pmtiles', protocol.tile);
     return () => {
-      maplibregl.removeProtocol('pmtiles');
+      removeProtocol('pmtiles');
     };
   }, []);
 
