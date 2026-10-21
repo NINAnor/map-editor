@@ -94,7 +94,7 @@ function FeatureTabs({
     <div className="flex min-h-0 flex-1 flex-col">
       <div
         role="tablist"
-        className="tabs tabs-box tabs-sm mb-2 max-w-full min-w-0 shrink-0 flex-nowrap overflow-x-auto bg-primary/5 p-1 [--tab-bg:var(--color-primary)]"
+        className="tabs tabs-box tabs-sm max-w-full min-w-0 shrink-0 flex-nowrap overflow-x-auto bg-primary/5 p-0 [--tab-bg:var(--color-primary)]"
       >
         {features.map((_, index) => (
           <button
@@ -148,8 +148,8 @@ export function Popup({ lat, lng, features, onClose, excludeFields, layout = 'ta
   const labels = buildFeatureLabels(features, layerNames);
 
   return (
-    <MaplibrePopup longitude={lng} latitude={lat} onClose={onClose} maxWidth="min(500px, 92vw)">
-      <div className="flex max-h-[50dvh] min-w-0 flex-col overflow-hidden p-1 pr-8">
+    <MaplibrePopup longitude={lng} latitude={lat} onClose={onClose} closeButton={false} maxWidth="min(500px, 92vw)">
+      <div className="flex max-h-[50dvh] min-w-0 flex-col overflow-hidden">
         {layout === 'stacked' ? (
           <FeatureStack features={features} labels={labels} excludeFields={excludeFields} />
         ) : (

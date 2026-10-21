@@ -259,10 +259,6 @@ button:focus-visible .treeitem.focused,
   @apply ps-4;
 }
 
-.maplibregl-popup-close-button {
-  @apply btn btn-ghost z-30;
-}
-
 .maplibregl-popup-content {
   @apply !bg-base-100 !text-base-content !p-0;
 }
