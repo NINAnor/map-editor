@@ -135,8 +135,12 @@ function FeatureStack({
     <div className="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto overscroll-contain">
       {features.map((feature, index) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: features have no stable identifier
-        <section key={index} className="border-l-2 border-accent pl-2">
-          <h6 className="mb-1 text-xs font-semibold uppercase tracking-wide text-primary">{labels[index]}</h6>
+        <section key={index} className="border-l-2 border-accent pl-2 [&_thead_tr]:top-6">
+          <h6 className="sticky top-0 z-20 flex h-6 min-w-0 items-center bg-base-100 text-xs font-semibold tracking-wide text-primary uppercase">
+            <span className="truncate" title={labels[index]}>
+              {labels[index]}
+            </span>
+          </h6>
           <Feature feature={feature} excludeFields={getExcludeFields(feature, excludeFields)} />
         </section>
       ))}
