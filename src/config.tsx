@@ -187,5 +187,6 @@ export const defaultConfigBase = {
     titiler_api_url: '',
     theme: DEFAULT_THEME,
     language: DEFAULT_LANG,
+    popupLayout: 'tabs',
   },
 };

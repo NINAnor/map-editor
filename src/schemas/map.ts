@@ -27,6 +27,12 @@ export const MapSettingsSchema = z.object({
   footer: FooterSchema.optional(),
   menuOrientation: z.enum(['horizontal', 'vertical']).default('vertical'),
   exclusiveLayers: z.boolean().default(false),
+  popupLayout: z
+    .enum(['tabs', 'stacked'])
+    .default('tabs')
+    .describe(
+      'How the info popup presents multiple features: "tabs" gives each feature its own tab, "stacked" lists every feature one after the other.',
+    ),
 });
 
 export const MapMetaSchema = z.object({

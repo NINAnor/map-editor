@@ -290,9 +290,33 @@ const layerExcludeFieldsSelector = createAppSelector(
   },
 );
 
+/**
+ * Selector for extracting display names for all layers
+ * Returns a map of layerId -> layer name, used to label popup tabs/headings
+ */
+const layerNamesSelector = createAppSelector(
+  state => state.layerOrder,
+  state => state.items,
+  (layerOrder: string[], items: Tree | null): Record<string, string> => {
+    const result: Record<string, string> = {};
+    if (!items) {
+      return result;
+    }
+    for (const id of layerOrder) {
+      const item = items[id];
+      if (item?.type === 'layer') {
+        result[id] = item.name;
+      }
+    }
+    return result;
+  },
+);
+
 export const useLayers = () => useAppStore(layerSelector);
 export const useMaplibreMapConf = () => useAppStore(maplibreMapSelector);
 export const useLayerExcludeFields = () => useAppStore(layerExcludeFieldsSelector);
+export const useLayerNames = () => useAppStore(layerNamesSelector);
+export const usePopupLayout = () => useAppStore(state => state.config?.popupLayout ?? 'tabs');
 export const useFolderNames = () => useAppStore(folderNameSelector);
 export const useItem = (id: string) => {
   return useAppStore(state => (state.items ? state.items[id] : null));

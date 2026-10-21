@@ -21,7 +21,21 @@
       "type": "string"
     },
     "baseMap": {
-      "type": "string"
+      "anyOf": [
+        {
+          "type": "string",
+          "enum": [
+            "positron",
+            "voyager",
+            "darkMatter",
+            "toporaster"
+          ]
+        },
+        {
+          "type": "string"
+        }
+      ],
+      "description": "The base map style to use. Must be a key present in the styles record."
     },
     "styles": {
       "type": "object",
@@ -29,29 +43,41 @@
         "type": "string"
       },
       "additionalProperties": {
-        "type": "string"
+        "anyOf": [
+          {
+            "type": "string",
+            "format": "uri"
+          },
+          {
+            "type": "string"
+          }
+        ]
       }
     },
     "layerOrder": {
       "type": "array",
       "items": {
         "type": "string"
-      }
+      },
+      "description": "An array of layer IDs in the order they should be rendered. Each ID must reference an item of type \"layer\" in the items record."
     },
     "viewState": {
       "type": "object",
       "properties": {
         "longitude": {
+          "default": 0,
           "type": "number",
           "minimum": -180,
           "maximum": 180
         },
         "latitude": {
+          "default": 0,
           "type": "number",
           "minimum": -90,
           "maximum": 90
         },
         "zoom": {
+          "default": 1,
           "type": "number",
           "minimum": 0,
           "maximum": 24
@@ -91,6 +117,11 @@
           "additionalProperties": false
         }
       },
+      "required": [
+        "longitude",
+        "latitude",
+        "zoom"
+      ],
       "additionalProperties": {}
     },
     "items": {
@@ -488,7 +519,14 @@
                                           "type": "object",
                                           "properties": {
                                             "value": {
-                                              "type": "string"
+                                              "anyOf": [
+                                                {
+                                                  "type": "string"
+                                                },
+                                                {
+                                                  "type": "number"
+                                                }
+                                              ]
                                             },
                                             "description": {
                                               "type": "string"
@@ -582,7 +620,14 @@
                                           "type": "object",
                                           "properties": {
                                             "value": {
-                                              "type": "string"
+                                              "anyOf": [
+                                                {
+                                                  "type": "string"
+                                                },
+                                                {
+                                                  "type": "number"
+                                                }
+                                              ]
                                             },
                                             "description": {
                                               "type": "string"
@@ -682,7 +727,14 @@
                                           "type": "object",
                                           "properties": {
                                             "value": {
-                                              "type": "string"
+                                              "anyOf": [
+                                                {
+                                                  "type": "string"
+                                                },
+                                                {
+                                                  "type": "number"
+                                                }
+                                              ]
                                             },
                                             "description": {
                                               "type": "string"
@@ -1110,13 +1162,6 @@
                           "parquet"
                         ],
                         "additionalProperties": {}
-                      },
-                      {
-                        "type": "object",
-                        "propertyNames": {
-                          "type": "string"
-                        },
-                        "additionalProperties": {}
                       }
                     ]
                   },
@@ -1143,18 +1188,22 @@
       "type": "array",
       "items": {
         "type": "string"
-      }
+      },
+      "description": "An array of item IDs that should be expanded in the layer tree. Each ID must reference an item of type \"folder\" in the items record."
     },
     "config": {
       "type": "object",
       "properties": {
         "titiler_api_url": {
+          "default": "/titiler",
           "type": "string"
         },
         "theme": {
+          "default": "nina",
           "type": "string"
         },
         "language": {
+          "default": "en",
           "type": "string"
         },
         "footer": {
@@ -1193,6 +1242,7 @@
           "additionalProperties": false
         },
         "menuOrientation": {
+          "default": "vertical",
           "type": "string",
           "enum": [
             "horizontal",
@@ -1200,13 +1250,26 @@
           ]
         },
         "exclusiveLayers": {
+          "default": false,
           "type": "boolean"
+        },
+        "popupLayout": {
+          "default": "tabs",
+          "description": "How the info popup presents multiple features: \"tabs\" gives each feature its own tab, \"stacked\" lists every feature one after the other.",
+          "type": "string",
+          "enum": [
+            "tabs",
+            "stacked"
+          ]
         }
       },
       "required": [
         "titiler_api_url",
         "theme",
-        "language"
+        "language",
+        "menuOrientation",
+        "exclusiveLayers",
+        "popupLayout"
       ],
       "additionalProperties": false
     }

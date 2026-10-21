@@ -11,7 +11,15 @@ import {
   ScaleControl,
   Source,
 } from 'react-map-gl/maplibre';
-import { useAppStore, useBaseMap, useLayerExcludeFields, useLayers, useMaplibreMapConf } from '../hooks/app';
+import {
+  useAppStore,
+  useBaseMap,
+  useLayerExcludeFields,
+  useLayerNames,
+  useLayers,
+  useMaplibreMapConf,
+  usePopupLayout,
+} from '../hooks/app';
 import { useErrorStore } from '../hooks/errors';
 import 'maplibre-gl/dist/maplibre-gl.css';
 import { useCallback, useEffect, useRef, useState } from 'react';
@@ -27,6 +35,8 @@ export default function Map() {
   const { initialViewState, sources, errors, interactiveLayerIds } = useMaplibreMapConf();
   const layers = useLayers();
   const excludeFields = useLayerExcludeFields();
+  const layerNames = useLayerNames();
+  const popupLayout = usePopupLayout();
   const addError = useErrorStore(state => state.addError);
   const [popup, setInfoPopup] = useState<PopupInfo | null>(null);
   const popupRef = useRef(popup);
@@ -102,7 +112,7 @@ export default function Map() {
         </Source>
       ))}
       <DeckGLOverlay layers={layers} />
-      {popup && <Popup {...popup} excludeFields={excludeFields} />}
+      {popup && <Popup {...popup} excludeFields={excludeFields} layerNames={layerNames} layout={popupLayout} />}
     </MaplibreMap>
   );
 }

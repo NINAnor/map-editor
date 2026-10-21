@@ -51,6 +51,9 @@
   "rescale-values": "Skaleringseverdier",
   "rescale-description": "Array med min,maks verdier for hvert bånd (f.eks. \"0,255\")",
   "exclusive-layers": "Eksklusive Lag",
+  "popup-layout": "Popup-layout",
+  "popup-layout-tabs": "Faner",
+  "popup-layout-stacked": "Stablet",
   "popup-settings": "Popup-innstillinger",
   "exclude-fields-help": "Angi feltnavn som skal skjules fra info-popup når du klikker på objekter.",
   "add-exclude-field": "Legg til ekskludert felt"

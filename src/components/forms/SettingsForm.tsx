@@ -31,6 +31,14 @@ export function SettingsForm({ defaultValues, onSubmit }: SettingsFormProps) {
     [t],
   );
 
+  const popupLayoutOptions = useMemo(
+    () => [
+      { value: 'tabs', label: t('popup-layout-tabs') },
+      { value: 'stacked', label: t('popup-layout-stacked') },
+    ],
+    [t],
+  );
+
   return (
     <form
       onSubmit={e => {
@@ -68,6 +76,14 @@ export function SettingsForm({ defaultValues, onSubmit }: SettingsFormProps) {
         </SelectInput>
 
         <CheckboxInput form={form} name="exclusiveLayers" label={t('exclusive-layers')} />
+
+        <SelectInput form={form} name="popupLayout" label={t('popup-layout')}>
+          {popupLayoutOptions.map(opt => (
+            <option key={opt.value} value={opt.value}>
+              {opt.label}
+            </option>
+          ))}
+        </SelectInput>
 
         <SubmitButton isSubmitting={form.formState.isSubmitting} className="mt-4">
           {t('save')}

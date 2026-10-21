@@ -161,6 +161,7 @@ interface MapSettings {
   footer?: Footer;
   menuOrientation?: "horizontal" | "vertical";
   exclusiveLayers?: boolean;
+  popupLayout?: "tabs" | "stacked";
 }
 ```
 
@@ -172,6 +173,7 @@ interface MapSettings {
 | `footer` | `Footer` | — | Optional footer configuration. |
 | `menuOrientation` | `"horizontal" \| "vertical"` | — | Controls sidebar menu layout. Defaults to `vertical`. |
 | `exclusiveLayers` | `boolean` | — | When `true`, activating a layer deactivates all others. |
+| `popupLayout` | `"tabs" \| "stacked"` | — | How the info popup presents multiple features. `tabs` gives each feature its own tab; `stacked` lists every feature one after the other. Defaults to `tabs`. |
 
 ### Footer
 
