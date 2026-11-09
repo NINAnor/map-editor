@@ -11,9 +11,9 @@ import { useUIStore } from '../hooks/ui';
 function ConfigErrorComponent({ error }: ErrorComponentProps) {
   if (error instanceof z.ZodError) {
     return (
-      <div className="min-h-screen bg-base-100 flex flex-col">
-        <Header icon="" />
-        <main className="container mx-auto px-4 py-8 grow">
+      <div className="min-h-screen flex flex-col bg-base-200 font-sans text-base-content">
+        <Header />
+        <main className="container mx-auto grow px-4 py-8">
           <ZodErrorDisplay error={error} title="Invalid configuration" className="max-w-4xl mx-auto" />
         </main>
         <Footer />
@@ -23,9 +23,9 @@ function ConfigErrorComponent({ error }: ErrorComponentProps) {
 
   if (error instanceof AxiosError) {
     return (
-      <div className="min-h-screen bg-base-100 flex flex-col">
-        <Header icon="" />
-        <main className="container mx-auto px-4 py-8 grow">
+      <div className="min-h-screen flex flex-col bg-base-200 font-sans text-base-content">
+        <Header />
+        <main className="container mx-auto grow px-4 py-8">
           <div className="font-bold text-2xl text-center">Unable to load configuration</div>
         </main>
         <Footer />
@@ -34,9 +34,9 @@ function ConfigErrorComponent({ error }: ErrorComponentProps) {
   }
 
   return (
-    <div className="min-h-screen bg-base-100 flex flex-col">
-      <Header icon="" />
-      <main className="container mx-auto px-4 py-8 grow">
+    <div className="min-h-screen flex flex-col bg-base-200 font-sans text-base-content">
+      <Header />
+      <main className="container mx-auto grow px-4 py-8">
         <div className="flex flex-col items-center">
           <div className="font-bold text-2xl text-center">There was an error</div>
           <ErrorComponent error={error} />
@@ -60,34 +60,65 @@ function RouteComponent() {
   const { data, isLoading, isError } = useSuspenseQuery(storeConfigQueryOptions(defaultConfigPath));
 
   return (
-    <div className="min-h-screen bg-base-100 flex flex-col">
-      <Header icon={data.data.icon} />
+    <div className="min-h-screen flex flex-col bg-base-200 font-sans text-base-content">
+      <Header />
 
-      <main className="container mx-auto px-4 py-8 grow">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-base-content mb-4">Maps</h1>
-          <p className="text-base-content/70 text-lg">
-            Interactive maps and spatial data from Norwegian Institute for Nature Research
-          </p>
-        </div>
+      <main className="container mx-auto w-full max-w-screen-2xl grow px-4 py-8 sm:px-8 sm:py-12">
+        <section className="hero mb-10 overflow-hidden rounded-box bg-primary text-primary-content">
+          <div className="hero-content w-full px-6 py-10 sm:px-12 sm:py-14">
+            <div className="w-full max-w-4xl">
+              <p className="mb-2 text-sm font-semibold uppercase tracking-wider text-accent">Explore maps</p>
+              <h1 className="text-3xl font-bold sm:text-4xl">Discover NINA Maps</h1>
+              <p className="mt-3 max-w-2xl text-primary-content/80">
+                Explore interactive maps and spatial data from the Norwegian Institute for Nature Research.
+              </p>
+            </div>
+          </div>
+        </section>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {!isLoading &&
-            !isError &&
-            data.data.maps.map(map => (
-              <div key={map.id} className="card bg-base-100 shadow-lg border hover:shadow-xl transition-shadow">
-                <div className="card-body">
-                  <h2 className="card-title text-primary capitalize">{map.title}</h2>
-                  <p className="text-base-content/70 mb-4">{map.description}</p>
-                  <div className="card-actions justify-end">
-                    <Link to="/$mapId" params={{ mapId: map.id }} target="_blank" className="btn btn-primary btn-sm">
-                      View Map
-                    </Link>
+        <section id="maps" aria-labelledby="map-list-heading">
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <h2 id="map-list-heading" className="mb-1 text-2xl font-bold text-primary">
+                Explore maps
+              </h2>
+              <p className="text-sm text-base-content/80">
+                Showing {data.data.maps.length} {data.data.maps.length === 1 ? 'map' : 'maps'}
+              </p>
+            </div>
+          </div>
+
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            {!isLoading &&
+              !isError &&
+              data.data.maps.map(map => (
+                <article key={map.id} className="card border border-base-300 bg-base-100 shadow-sm">
+                  <div className="card-body">
+                    <h3 className="card-title text-primary">
+                      <Link to="/$mapId" params={{ mapId: map.id }} target="_blank">
+                        {map.title}
+                      </Link>
+                    </h3>
+                    <p className="text-base-content/80">
+                      {map.description ||
+                        'Explore spatial data and research from the Norwegian Institute for Nature Research.'}
+                    </p>
+                    <div className="card-actions mt-2 justify-end">
+                      <Link
+                        to="/$mapId"
+                        params={{ mapId: map.id }}
+                        target="_blank"
+                        className="btn btn-secondary btn-sm"
+                      >
+                        View map
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
-        </div>
+                </article>
+              ))}
+          </div>
+          {data.data.maps.length === 0 && <p className="rounded-box bg-base-100 p-6">No maps are available yet.</p>}
+        </section>
       </main>
       <Footer />
     </div>

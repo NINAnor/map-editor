@@ -32,7 +32,7 @@ function ConfigErrorComponent({ error }: ErrorComponentProps) {
   if (error instanceof z.ZodError) {
     return (
       <div className="min-h-screen bg-base-100 flex flex-col">
-        <Header icon="" />
+        <Header />
         <main className="container mx-auto px-4 py-8 grow">
           <ZodErrorDisplay error={error} title="Invalid map configuration" className="max-w-4xl mx-auto" />
           <div className="flex justify-center mt-5">
@@ -49,7 +49,7 @@ function ConfigErrorComponent({ error }: ErrorComponentProps) {
   if (error instanceof AxiosError || error instanceof MapNotFoundError) {
     return (
       <div className="min-h-screen bg-base-100 flex flex-col">
-        <Header icon="" />
+        <Header />
         <main className="container mx-auto px-4 py-8 grow">
           <div className="font-bold text-2xl text-center">Unable to load the map</div>
           <div className="text-center text-md">The following map was not found</div>
@@ -66,7 +66,7 @@ function ConfigErrorComponent({ error }: ErrorComponentProps) {
 
   return (
     <div className="min-h-screen bg-base-100 flex flex-col">
-      <Header icon="" />
+      <Header />
       <main className="container mx-auto px-4 py-8 grow">
         <div className="flex flex-col items-center">
           <div className="font-bold text-2xl text-center">There was an error</div>
