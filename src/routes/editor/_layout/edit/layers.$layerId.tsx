@@ -5,7 +5,7 @@ import { createFileRoute, Link, useNavigate } from '@tanstack/react-router';
 import { useCallback } from 'react';
 import { useForm, useWatch } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
-import { MDXInput, SubmitButton, TextInput } from '@/components/form-items';
+import { CheckboxInput, MDXInput, SubmitButton, TextInput } from '@/components/form-items';
 import {
   ParquetFields,
   PMTilesFields,
@@ -14,7 +14,7 @@ import {
   WMSFields,
   WMTSFields,
 } from '../../../../components/layer-fields';
-import { useAppActions, useLayer } from '../../../../hooks/app';
+import { useAppActions, useAppStore, useLayer } from '../../../../hooks/app';
 import {
   type LayerConfig,
   type ParquetSource,
@@ -37,6 +37,7 @@ function RouteComponent() {
 
   const { layerId } = Route.useParams();
   const layer = useLayer(layerId);
+  const exclusiveLayers = useAppStore(state => state.config.exclusiveLayers);
 
   const form = useForm({
     resolver: standardSchemaResolver(UpdateLayerSchema),
@@ -45,6 +46,7 @@ function RouteComponent() {
           name: layer.name,
           description: layer.description,
           popup: layer.popup !== false,
+          alwaysActive: layer.alwaysActive,
           layer: layer.layer,
           download_url: layer.download_url,
         }
@@ -60,6 +62,7 @@ function RouteComponent() {
       name: string;
       description?: string;
       popup: boolean;
+      alwaysActive: boolean;
       layer: LayerConfig;
       download_url?: string;
     };
@@ -142,6 +145,16 @@ function RouteComponent() {
           <MDXInput form={form} name="description" label={t('description')} />
 
           <TextInput form={form} name="download_url" label={t('download-url')} />
+
+          <CheckboxInput
+            form={form}
+            name="alwaysActive"
+            label={t('always-active')}
+            disabled={exclusiveLayers}
+            description={
+              exclusiveLayers ? t('always-active-disabled-exclusive-layers') : t('always-active-description')
+            }
+          />
 
           <div className="divider">{t('layer-configuration', 'Layer Configuration')}</div>
 

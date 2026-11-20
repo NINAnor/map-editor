@@ -110,6 +110,9 @@ function RouteComponent() {
   );
 
   const settings = useAppStore(store => store.config);
+  const hasAlwaysActiveLayer = useAppStore(state =>
+    Object.values(state.items ?? {}).some(item => item.type === 'layer' && item.alwaysActive),
+  );
 
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
@@ -149,7 +152,11 @@ function RouteComponent() {
         </div>
       </div>
 
-      <SettingsForm defaultValues={settings} onSubmit={value => actions.setSettings(value)} />
+      <SettingsForm
+        defaultValues={settings}
+        hasAlwaysActiveLayer={hasAlwaysActiveLayer}
+        onSubmit={value => actions.setSettings(value)}
+      />
     </div>
   );
 }

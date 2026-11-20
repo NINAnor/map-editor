@@ -180,6 +180,10 @@
                     "description": "Whether features from this layer appear in info popups; defaults to true.",
                     "type": "boolean"
                   },
+                  "alwaysActive": {
+                    "description": "Whether this layer must remain active on the map; defaults to false.",
+                    "type": "boolean"
+                  },
                   "layer": {
                     "anyOf": [
                       {

@@ -10,6 +10,7 @@ export const LayerSchema = z.object({
   name: z.string(),
   description: z.string().optional(),
   popup: z.boolean().optional().describe('Whether features from this layer appear in info popups; defaults to true.'),
+  alwaysActive: z.boolean().optional().describe('Whether this layer must remain active on the map; defaults to false.'),
   layer: LayerConfigSchema,
   download_url: z.string().optional(),
 });

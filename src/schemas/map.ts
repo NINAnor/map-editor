@@ -87,6 +87,28 @@ export const MapConfigSchema = MapMetaSchema.extend({
 
   if (data.items === null) return;
 
+  const alwaysActiveLayerIds = Object.entries(data.items).flatMap(([id, item]) =>
+    item.type === 'layer' && item.alwaysActive ? [id] : [],
+  );
+
+  alwaysActiveLayerIds.forEach(id => {
+    if (!data.layerOrder.includes(id)) {
+      ctx.addIssue({
+        code: 'custom',
+        message: `Always-active layer '${id}' must be present in layerOrder`,
+        path: ['items', id, 'alwaysActive'],
+      });
+    }
+  });
+
+  if (data.config.exclusiveLayers && alwaysActiveLayerIds.length > 0) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Always-active layers cannot be used when exclusiveLayers is enabled',
+      path: ['config', 'exclusiveLayers'],
+    });
+  }
+
   // items must contain a 'root' folder (used as the tree root by LayerTree)
   if (!('root' in data.items)) {
     ctx.addIssue({

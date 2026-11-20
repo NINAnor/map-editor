@@ -33,20 +33,21 @@ export function ItemRender({ item, editable, className, routePath }: ItemRenderP
   const layerOrder = useAppStore(state => state.layerOrder);
   const isVisible = layerOrder.includes(item.getId());
   const { toggleLayer } = useAppActions();
+  const data = item.getItemData();
+  const isFolder = item.isFolder();
+  const isAlwaysActive = !isFolder && (data as Layer).alwaysActive;
   const { onClick, ...props } = item.getProps();
   const cb = useCallback<MouseEventHandler>(
     e => {
       // eslint-disable-next-line @typescript-eslint/no-unsafe-call
       onClick(e);
-      if (!item.isFolder()) {
+      if (!item.isFolder() && !isAlwaysActive) {
         toggleLayer(item.getId());
       }
     },
-    [onClick, item, toggleLayer],
+    [onClick, item, toggleLayer, isAlwaysActive],
   );
 
-  const data = item.getItemData();
-  const isFolder = item.isFolder();
   const id = item.getId();
 
   return (
@@ -64,9 +65,11 @@ export function ItemRender({ item, editable, className, routePath }: ItemRenderP
           folder: isFolder,
         })}
       >
-        <div className="text-accent">
+        <div className="text-accent w-4">
           {isFolder && <FontAwesomeIcon icon={item.isExpanded() ? faFolderOpen : faFolderClosed} />}
-          {!isFolder && <FontAwesomeIcon className="text-slate" icon={isVisible ? faSquareCheck : faSquare} />}
+          {!isFolder && !isAlwaysActive && (
+            <FontAwesomeIcon className="text-slate" icon={isVisible ? faSquareCheck : faSquare} />
+          )}
         </div>
         {!isFolder && <LayerIcon className="shrink-0" layer={(data as Layer).layer} />}
         <div>{item.getItemName()}</div>

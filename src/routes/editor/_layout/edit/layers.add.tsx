@@ -130,6 +130,7 @@ function RouteComponent() {
       name: typedData.name,
       description: typedData.description,
       popup: typedData.popup ? undefined : false,
+      alwaysActive: false,
       download_url: typedData.download_url,
       parent: typedData.parent,
       id,

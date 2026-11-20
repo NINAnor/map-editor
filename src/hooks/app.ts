@@ -64,6 +64,13 @@ export const useAppStore = create<AppState>()(
           }),
         setSettings: settings =>
           set(state => {
+            if (
+              settings.exclusiveLayers &&
+              Object.values(state.items ?? {}).some(item => item.type === 'layer' && item.alwaysActive)
+            ) {
+              toast.error('Exclusive layers cannot be enabled while a layer is always active');
+              return;
+            }
             state.config = settings;
           }),
         setExpandedItems: expandedItems =>
@@ -110,6 +117,7 @@ export const useAppStore = create<AppState>()(
           set(state => {
             if (state.items?.[id] && state.items[id].type === 'layer') {
               delete state.items[id];
+              state.layerOrder = state.layerOrder.filter(layerId => layerId !== id);
               Object.keys(state.items).forEach(key => {
                 if (state.items && state.items[key].type === 'folder') {
                   const idx = state.items[key].children.indexOf(id);
@@ -122,12 +130,20 @@ export const useAppStore = create<AppState>()(
           }),
         updateTreeItemLayer: (id, item) =>
           set(state => {
+            if (item.alwaysActive && state.config.exclusiveLayers) {
+              toast.error('Always-active layers cannot be enabled while exclusive layers are on');
+              return;
+            }
             if (state.items?.[id]?.type === 'layer') {
               state.items[id].name = item.name;
               state.items[id].description = item.description;
               state.items[id].popup = item.popup;
+              state.items[id].alwaysActive = item.alwaysActive;
               state.items[id].layer = item.layer;
               state.items[id].download_url = item.download_url;
+              if (item.alwaysActive && !state.layerOrder.includes(id)) {
+                state.layerOrder.push(id);
+              }
             }
           }),
         addTreeItemFolder: item =>
@@ -168,6 +184,7 @@ export const useAppStore = create<AppState>()(
                 type: 'layer',
                 description: item.description,
                 popup: item.popup,
+                alwaysActive: item.alwaysActive ?? false,
                 layer: item.layer,
                 download_url: item.download_url,
               };
@@ -181,6 +198,9 @@ export const useAppStore = create<AppState>()(
         toggleLayer: (id: string) =>
           set(state => {
             if (state.layerOrder.includes(id)) {
+              if (state.items?.[id]?.type === 'layer' && state.items[id].alwaysActive) {
+                return;
+              }
               state.layerOrder = state.layerOrder.filter(lid => id !== lid);
             } else {
               if (state.config.exclusiveLayers) {

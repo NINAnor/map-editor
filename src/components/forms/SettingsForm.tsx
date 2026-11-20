@@ -8,10 +8,11 @@ import { type MapSettings, MapSettingsSchema } from '../../schemas';
 
 interface SettingsFormProps {
   defaultValues: MapSettings;
+  hasAlwaysActiveLayer: boolean;
   onSubmit: (value: MapSettings) => void | Promise<void>;
 }
 
-export function SettingsForm({ defaultValues, onSubmit }: SettingsFormProps) {
+export function SettingsForm({ defaultValues, hasAlwaysActiveLayer, onSubmit }: SettingsFormProps) {
   const { t } = useTranslation();
 
   const form = useForm({
@@ -75,7 +76,13 @@ export function SettingsForm({ defaultValues, onSubmit }: SettingsFormProps) {
           ))}
         </SelectInput>
 
-        <CheckboxInput form={form} name="exclusiveLayers" label={t('exclusive-layers')} />
+        <CheckboxInput
+          form={form}
+          name="exclusiveLayers"
+          label={t('exclusive-layers')}
+          disabled={hasAlwaysActiveLayer}
+          description={hasAlwaysActiveLayer ? t('exclusive-layers-disabled-always-active') : undefined}
+        />
 
         <SelectInput form={form} name="popupLayout" label={t('popup-layout')}>
           {popupLayoutOptions.map(opt => (
