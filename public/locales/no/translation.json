@@ -55,6 +55,7 @@
   "popup-layout-tabs": "Faner",
   "popup-layout-stacked": "Stablet",
   "popup-settings": "Popup-innstillinger",
+  "show-in-popups": "Vis i popup-vinduer",
   "exclude-fields-help": "Angi feltnavn som skal skjules fra info-popup når du klikker på objekter.",
   "add-exclude-field": "Legg til ekskludert felt"
 }

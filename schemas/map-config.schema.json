@@ -176,6 +176,10 @@
                   "description": {
                     "type": "string"
                   },
+                  "popup": {
+                    "description": "Whether features from this layer appear in info popups; defaults to true.",
+                    "type": "boolean"
+                  },
                   "layer": {
                     "anyOf": [
                       {

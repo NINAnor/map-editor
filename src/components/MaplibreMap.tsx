@@ -13,7 +13,6 @@ import {
   Source,
 } from 'react-map-gl/maplibre';
 import {
-  useAppStore,
   useBaseMap,
   useLayerExcludeFields,
   useLayerNames,
@@ -23,7 +22,7 @@ import {
 } from '../hooks/app';
 import { useErrorStore } from '../hooks/errors';
 import 'maplibre-gl/dist/maplibre-gl.css';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import MediaQuery from 'react-responsive';
 import { toast } from 'react-toastify';
 import DeckGLOverlay from './DeckGLOverlay';
@@ -47,7 +46,10 @@ export default function Map() {
   const popupRef = useRef(popup);
   popupRef.current = popup;
 
-  const layerOrder = useAppStore(state => state.layerOrder);
+  const popupLayerIds = useMemo(
+    () => new Set(layers.filter(layer => layer.popup !== false).map(layer => layer.id)),
+    [layers],
+  );
 
   // Display layer conversion errors
   useEffect(() => {
@@ -56,17 +58,16 @@ export default function Map() {
     }
   }, [errors, addError]);
 
-  // Remove features from hidden layers; close popup if none remain
+  // Remove features from hidden or popup-disabled layers; close popup if none remain
   useEffect(() => {
     if (!popupRef.current) return;
-    const visibleSet = new Set(layerOrder);
-    const visibleFeatures = popupRef.current.features.filter(f => f.layer?.id && visibleSet.has(f.layer.id));
+    const visibleFeatures = popupRef.current.features.filter(f => f.layer?.id && popupLayerIds.has(f.layer.id));
     if (visibleFeatures.length === 0) {
       setInfoPopup(null);
     } else if (visibleFeatures.length !== popupRef.current.features.length) {
       setInfoPopup({ ...popupRef.current, features: visibleFeatures });
     }
-  }, [layerOrder]);
+  }, [popupLayerIds]);
 
   useEffect(() => {
     const protocol = new Protocol();
@@ -76,18 +77,22 @@ export default function Map() {
     };
   }, []);
 
-  const onClick = useCallback((event: MapLayerMouseEvent) => {
-    const {
-      features,
-      lngLat: { lat, lng },
-    } = event;
+  const onClick = useCallback(
+    (event: MapLayerMouseEvent) => {
+      const {
+        features,
+        lngLat: { lat, lng },
+      } = event;
 
-    if (features && features.length > 0) {
-      setInfoPopup({ features, lat, lng, onClose: () => setInfoPopup(null) });
-    } else {
-      setInfoPopup(null);
-    }
-  }, []);
+      const popupFeatures = features?.filter(feature => feature.layer?.id && popupLayerIds.has(feature.layer.id));
+      if (popupFeatures && popupFeatures.length > 0) {
+        setInfoPopup({ features: popupFeatures, lat, lng, onClose: () => setInfoPopup(null) });
+      } else {
+        setInfoPopup(null);
+      }
+    },
+    [popupLayerIds],
+  );
 
   const onMapError = useCallback((event: ErrorEvent) => {
     const message = event.error?.message ?? 'Unknown map error';

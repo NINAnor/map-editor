@@ -19,7 +19,7 @@ The map viewer is the primary user interface of NINA Maps. It renders an interac
 
 ## Feature pop-ups
 
-Clicking on an interactive layer (PMTiles vector layers) opens a pop-up showing the feature's properties. Specific fields can be hidden per layer using the `excludeFields` configuration option.
+Clicking on an interactive layer (PMTiles vector layers) opens a pop-up showing the feature's properties. Set a layer item's `popup` to `false` to keep that layer out of popups while leaving it visible. Specific fields can be hidden per layer using the `excludeFields` configuration option.
 
 ## Sidebar tabs
 

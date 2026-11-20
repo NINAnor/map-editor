@@ -44,6 +44,7 @@ function RouteComponent() {
       ? {
           name: layer.name,
           description: layer.description,
+          popup: layer.popup !== false,
           layer: layer.layer,
           download_url: layer.download_url,
         }
@@ -55,8 +56,14 @@ function RouteComponent() {
     watchedLayer && typeof watchedLayer === 'object' && 'type' in watchedLayer ? String(watchedLayer.type) : null;
 
   const handleSubmit = form.handleSubmit(data => {
-    const typedData = data as { name: string; description?: string; layer: LayerConfig; download_url?: string };
-    actions.updateTreeItemLayer(layerId, typedData);
+    const typedData = data as {
+      name: string;
+      description?: string;
+      popup: boolean;
+      layer: LayerConfig;
+      download_url?: string;
+    };
+    actions.updateTreeItemLayer(layerId, { ...typedData, popup: typedData.popup ? undefined : false });
     navigate({ to: '/editor/edit' }).catch(console.error);
   });
 

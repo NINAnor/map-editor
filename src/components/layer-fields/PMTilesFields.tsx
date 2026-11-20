@@ -60,6 +60,10 @@ export function PMTilesFields({ form }: { form: any }) {
       {/* Exclude Fields configuration */}
       <div className="bg-base-300 p-4 rounded-lg">
         <h3 className="font-semibold mb-3">{t('popup-settings', 'Popup Settings')}</h3>
+        <label className="label cursor-pointer justify-start gap-2 mb-3">
+          <input type="checkbox" className="checkbox" {...register('popup')} />
+          <span className="label-text">{t('show-in-popups', 'Show in popups')}</span>
+        </label>
         <p className="text-sm text-base-content/60 mb-3">
           {t('exclude-fields-help', 'Specify field names to hide from the info popup when clicking features.')}
         </p>

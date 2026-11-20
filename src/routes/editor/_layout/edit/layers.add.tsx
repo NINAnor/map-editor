@@ -6,7 +6,7 @@ import { nanoid } from 'nanoid';
 import { useForm } from 'react-hook-form';
 import { useTranslation } from 'react-i18next';
 import { z } from 'zod';
-import { MDXInput, SelectInput, SubmitButton, TextInput } from '@/components/form-items';
+import { CheckboxInput, MDXInput, SelectInput, SubmitButton, TextInput } from '@/components/form-items';
 import { TREE_ROOT_ID } from '../../../../config';
 import { useAppActions, useFolderNames } from '../../../../hooks/app';
 import type {
@@ -27,6 +27,7 @@ export const Route = createFileRoute('/editor/_layout/edit/layers/add')({
 const AddLayerFormSchema = z.object({
   name: z.string().min(1, 'Name is required'),
   description: z.string().optional(),
+  popup: z.boolean(),
   parent: z.string(),
   download_url: z.string().optional(),
   layerType: z.enum(['pmtiles', 'titiler', 'raster', 'wmts', 'wms', 'parquet']),
@@ -37,6 +38,7 @@ type AddLayerForm = z.infer<typeof AddLayerFormSchema>;
 const DEFAULT_FORM_DATA: AddLayerForm = {
   name: '',
   description: '',
+  popup: true,
   parent: TREE_ROOT_ID,
   download_url: '',
   layerType: 'pmtiles',
@@ -127,6 +129,7 @@ function RouteComponent() {
     actions.addTreeItemLayer({
       name: typedData.name,
       description: typedData.description,
+      popup: typedData.popup ? undefined : false,
       download_url: typedData.download_url,
       parent: typedData.parent,
       id,
@@ -171,6 +174,8 @@ function RouteComponent() {
             <option value="raster">Raster</option>
             <option value="parquet">Parquet (GeoParquet) - Experimental</option>
           </SelectInput>
+
+          <CheckboxInput form={form} name="popup" label={t('show-in-popups', 'Show in popups')} />
 
           <TextInput form={form} name="download_url" label={t('download-url')} />
 

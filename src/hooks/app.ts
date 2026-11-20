@@ -125,6 +125,7 @@ export const useAppStore = create<AppState>()(
             if (state.items?.[id]?.type === 'layer') {
               state.items[id].name = item.name;
               state.items[id].description = item.description;
+              state.items[id].popup = item.popup;
               state.items[id].layer = item.layer;
               state.items[id].download_url = item.download_url;
             }
@@ -166,6 +167,7 @@ export const useAppStore = create<AppState>()(
                 name: item.name,
                 type: 'layer',
                 description: item.description,
+                popup: item.popup,
                 layer: item.layer,
                 download_url: item.download_url,
               };

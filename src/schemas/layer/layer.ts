@@ -9,6 +9,7 @@ export const LayerSchema = z.object({
   type: z.literal('layer'),
   name: z.string(),
   description: z.string().optional(),
+  popup: z.boolean().optional().describe('Whether features from this layer appear in info popups; defaults to true.'),
   layer: LayerConfigSchema,
   download_url: z.string().optional(),
 });

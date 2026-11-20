@@ -66,6 +66,7 @@ interface Layer {
   type: "layer";
   name: string;
   description?: string;
+  popup?: boolean;
   layer: LayerConfig;
   download_url?: string;
 }
@@ -76,6 +77,7 @@ interface Layer {
 | `type` | ✓ | Must be `"layer"` |
 | `name` | ✓ | Display name in the layer tree |
 | `description` | — | MDX-formatted description |
+| `popup` | — | Whether features from this layer appear in info popups. Defaults to `true`; set to `false` to disable. |
 | `layer` | ✓ | Layer source configuration — one of the types below |
 | `download_url` | — | URL shown as a download link next to the layer |
 

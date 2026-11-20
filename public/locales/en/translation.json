@@ -55,6 +55,7 @@
   "popup-layout-tabs": "Tabs",
   "popup-layout-stacked": "Stacked",
   "popup-settings": "Popup Settings",
+  "show-in-popups": "Show in popups",
   "exclude-fields-help": "Specify field names to hide from the info popup when clicking features.",
   "add-exclude-field": "Add Excluded Field"
 }
