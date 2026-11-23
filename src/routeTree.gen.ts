@@ -9,41 +9,41 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as EditorRouteImport } from './routes/editor'
-import { Route as MapIdRouteImport } from './routes/$mapId'
 import { Route as IndexRouteImport } from './routes/index'
-import { Route as EditorLayoutRouteImport } from './routes/editor/_layout'
+import { Route as MapIdRouteImport } from './routes/$mapId'
+import { Route as EditorRouteImport } from './routes/editor'
 import { Route as MapIdLayoutRouteImport } from './routes/$mapId/_layout'
-import { Route as EditorLayoutEditRouteImport } from './routes/editor/_layout/edit'
-import { Route as EditorLayoutViewRouteImport } from './routes/editor/_layout/_view'
+import { Route as EditorLayoutRouteImport } from './routes/editor/_layout'
 import { Route as MapIdLayoutViewRouteImport } from './routes/$mapId/_layout/_view'
-import { Route as EditorLayoutEditIndexRouteImport } from './routes/editor/_layout/edit/index'
-import { Route as EditorLayoutViewIndexRouteImport } from './routes/editor/_layout/_view/index'
+import { Route as EditorLayoutViewRouteImport } from './routes/editor/_layout/_view'
+import { Route as EditorLayoutEditRouteImport } from './routes/editor/_layout/edit'
 import { Route as MapIdLayoutViewIndexRouteImport } from './routes/$mapId/_layout/_view/index'
-import { Route as EditorLayoutEditSettingsRouteImport } from './routes/editor/_layout/edit/settings'
-import { Route as EditorLayoutEditManageRouteImport } from './routes/editor/_layout/edit/manage'
-import { Route as EditorLayoutEditDescriptionRouteImport } from './routes/editor/_layout/edit/description'
-import { Route as EditorLayoutEditBasemapRouteImport } from './routes/editor/_layout/edit/basemap'
-import { Route as EditorLayoutViewManageRouteImport } from './routes/editor/_layout/_view/manage'
-import { Route as EditorLayoutViewLegendRouteImport } from './routes/editor/_layout/_view/legend'
-import { Route as EditorLayoutViewDescriptionRouteImport } from './routes/editor/_layout/_view/description'
-import { Route as EditorLayoutViewBasemapRouteImport } from './routes/editor/_layout/_view/basemap'
-import { Route as MapIdLayoutViewManageRouteImport } from './routes/$mapId/_layout/_view/manage'
-import { Route as MapIdLayoutViewLegendRouteImport } from './routes/$mapId/_layout/_view/legend'
-import { Route as MapIdLayoutViewDescriptionRouteImport } from './routes/$mapId/_layout/_view/description'
 import { Route as MapIdLayoutViewBasemapRouteImport } from './routes/$mapId/_layout/_view/basemap'
-import { Route as EditorLayoutEditLayersAddRouteImport } from './routes/editor/_layout/edit/layers.add'
-import { Route as EditorLayoutEditLayersLayerIdRouteImport } from './routes/editor/_layout/edit/layers.$layerId'
-import { Route as EditorLayoutEditFoldersAddRouteImport } from './routes/editor/_layout/edit/folders.add'
-import { Route as EditorLayoutEditFoldersFolderIdRouteImport } from './routes/editor/_layout/edit/folders.$folderId'
-import { Route as EditorLayoutViewLayersLayerIdRouteImport } from './routes/editor/_layout/_view/layers.$layerId'
-import { Route as EditorLayoutViewFoldersFolderIdRouteImport } from './routes/editor/_layout/_view/folders.$folderId'
-import { Route as MapIdLayoutViewLayersLayerIdRouteImport } from './routes/$mapId/_layout/_view/layers.$layerId'
+import { Route as MapIdLayoutViewDescriptionRouteImport } from './routes/$mapId/_layout/_view/description'
+import { Route as MapIdLayoutViewLegendRouteImport } from './routes/$mapId/_layout/_view/legend'
+import { Route as MapIdLayoutViewManageRouteImport } from './routes/$mapId/_layout/_view/manage'
+import { Route as EditorLayoutViewIndexRouteImport } from './routes/editor/_layout/_view/index'
+import { Route as EditorLayoutViewBasemapRouteImport } from './routes/editor/_layout/_view/basemap'
+import { Route as EditorLayoutViewDescriptionRouteImport } from './routes/editor/_layout/_view/description'
+import { Route as EditorLayoutViewLegendRouteImport } from './routes/editor/_layout/_view/legend'
+import { Route as EditorLayoutViewManageRouteImport } from './routes/editor/_layout/_view/manage'
+import { Route as EditorLayoutEditIndexRouteImport } from './routes/editor/_layout/edit/index'
+import { Route as EditorLayoutEditBasemapRouteImport } from './routes/editor/_layout/edit/basemap'
+import { Route as EditorLayoutEditDescriptionRouteImport } from './routes/editor/_layout/edit/description'
+import { Route as EditorLayoutEditManageRouteImport } from './routes/editor/_layout/edit/manage'
+import { Route as EditorLayoutEditSettingsRouteImport } from './routes/editor/_layout/edit/settings'
 import { Route as MapIdLayoutViewFoldersFolderIdRouteImport } from './routes/$mapId/_layout/_view/folders.$folderId'
+import { Route as MapIdLayoutViewLayersLayerIdRouteImport } from './routes/$mapId/_layout/_view/layers.$layerId'
+import { Route as EditorLayoutViewFoldersFolderIdRouteImport } from './routes/editor/_layout/_view/folders.$folderId'
+import { Route as EditorLayoutViewLayersLayerIdRouteImport } from './routes/editor/_layout/_view/layers.$layerId'
+import { Route as EditorLayoutEditFoldersFolderIdRouteImport } from './routes/editor/_layout/edit/folders.$folderId'
+import { Route as EditorLayoutEditFoldersAddRouteImport } from './routes/editor/_layout/edit/folders.add'
+import { Route as EditorLayoutEditLayersLayerIdRouteImport } from './routes/editor/_layout/edit/layers.$layerId'
+import { Route as EditorLayoutEditLayersAddRouteImport } from './routes/editor/_layout/edit/layers.add'
 
-const EditorRoute = EditorRouteImport.update({
-  id: '/editor',
-  path: '/editor',
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
+  path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MapIdRoute = MapIdRouteImport.update({
@@ -51,98 +51,40 @@ const MapIdRoute = MapIdRouteImport.update({
   path: '/$mapId',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const EditorRoute = EditorRouteImport.update({
+  id: '/editor',
+  path: '/editor',
   getParentRoute: () => rootRouteImport,
+} as any)
+const MapIdLayoutRoute = MapIdLayoutRouteImport.update({
+  id: '/_layout',
+  getParentRoute: () => MapIdRoute,
 } as any)
 const EditorLayoutRoute = EditorLayoutRouteImport.update({
   id: '/_layout',
   getParentRoute: () => EditorRoute,
 } as any)
-const MapIdLayoutRoute = MapIdLayoutRouteImport.update({
-  id: '/_layout',
-  getParentRoute: () => MapIdRoute,
+const MapIdLayoutViewRoute = MapIdLayoutViewRouteImport.update({
+  id: '/_view',
+  getParentRoute: () => MapIdLayoutRoute,
+} as any)
+const EditorLayoutViewRoute = EditorLayoutViewRouteImport.update({
+  id: '/_view',
+  getParentRoute: () => EditorLayoutRoute,
 } as any)
 const EditorLayoutEditRoute = EditorLayoutEditRouteImport.update({
   id: '/edit',
   path: '/edit',
   getParentRoute: () => EditorLayoutRoute,
 } as any)
-const EditorLayoutViewRoute = EditorLayoutViewRouteImport.update({
-  id: '/_view',
-  getParentRoute: () => EditorLayoutRoute,
-} as any)
-const MapIdLayoutViewRoute = MapIdLayoutViewRouteImport.update({
-  id: '/_view',
-  getParentRoute: () => MapIdLayoutRoute,
-} as any)
-const EditorLayoutEditIndexRoute = EditorLayoutEditIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => EditorLayoutEditRoute,
-} as any)
-const EditorLayoutViewIndexRoute = EditorLayoutViewIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => EditorLayoutViewRoute,
-} as any)
 const MapIdLayoutViewIndexRoute = MapIdLayoutViewIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => MapIdLayoutViewRoute,
 } as any)
-const EditorLayoutEditSettingsRoute =
-  EditorLayoutEditSettingsRouteImport.update({
-    id: '/settings',
-    path: '/settings',
-    getParentRoute: () => EditorLayoutEditRoute,
-  } as any)
-const EditorLayoutEditManageRoute = EditorLayoutEditManageRouteImport.update({
-  id: '/manage',
-  path: '/manage',
-  getParentRoute: () => EditorLayoutEditRoute,
-} as any)
-const EditorLayoutEditDescriptionRoute =
-  EditorLayoutEditDescriptionRouteImport.update({
-    id: '/description',
-    path: '/description',
-    getParentRoute: () => EditorLayoutEditRoute,
-  } as any)
-const EditorLayoutEditBasemapRoute = EditorLayoutEditBasemapRouteImport.update({
+const MapIdLayoutViewBasemapRoute = MapIdLayoutViewBasemapRouteImport.update({
   id: '/basemap',
   path: '/basemap',
-  getParentRoute: () => EditorLayoutEditRoute,
-} as any)
-const EditorLayoutViewManageRoute = EditorLayoutViewManageRouteImport.update({
-  id: '/manage',
-  path: '/manage',
-  getParentRoute: () => EditorLayoutViewRoute,
-} as any)
-const EditorLayoutViewLegendRoute = EditorLayoutViewLegendRouteImport.update({
-  id: '/legend',
-  path: '/legend',
-  getParentRoute: () => EditorLayoutViewRoute,
-} as any)
-const EditorLayoutViewDescriptionRoute =
-  EditorLayoutViewDescriptionRouteImport.update({
-    id: '/description',
-    path: '/description',
-    getParentRoute: () => EditorLayoutViewRoute,
-  } as any)
-const EditorLayoutViewBasemapRoute = EditorLayoutViewBasemapRouteImport.update({
-  id: '/basemap',
-  path: '/basemap',
-  getParentRoute: () => EditorLayoutViewRoute,
-} as any)
-const MapIdLayoutViewManageRoute = MapIdLayoutViewManageRouteImport.update({
-  id: '/manage',
-  path: '/manage',
-  getParentRoute: () => MapIdLayoutViewRoute,
-} as any)
-const MapIdLayoutViewLegendRoute = MapIdLayoutViewLegendRouteImport.update({
-  id: '/legend',
-  path: '/legend',
   getParentRoute: () => MapIdLayoutViewRoute,
 } as any)
 const MapIdLayoutViewDescriptionRoute =
@@ -151,21 +93,97 @@ const MapIdLayoutViewDescriptionRoute =
     path: '/description',
     getParentRoute: () => MapIdLayoutViewRoute,
   } as any)
-const MapIdLayoutViewBasemapRoute = MapIdLayoutViewBasemapRouteImport.update({
-  id: '/basemap',
-  path: '/basemap',
+const MapIdLayoutViewLegendRoute = MapIdLayoutViewLegendRouteImport.update({
+  id: '/legend',
+  path: '/legend',
   getParentRoute: () => MapIdLayoutViewRoute,
 } as any)
-const EditorLayoutEditLayersAddRoute =
-  EditorLayoutEditLayersAddRouteImport.update({
-    id: '/layers/add',
-    path: '/layers/add',
+const MapIdLayoutViewManageRoute = MapIdLayoutViewManageRouteImport.update({
+  id: '/manage',
+  path: '/manage',
+  getParentRoute: () => MapIdLayoutViewRoute,
+} as any)
+const EditorLayoutViewIndexRoute = EditorLayoutViewIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EditorLayoutViewRoute,
+} as any)
+const EditorLayoutViewBasemapRoute = EditorLayoutViewBasemapRouteImport.update({
+  id: '/basemap',
+  path: '/basemap',
+  getParentRoute: () => EditorLayoutViewRoute,
+} as any)
+const EditorLayoutViewDescriptionRoute =
+  EditorLayoutViewDescriptionRouteImport.update({
+    id: '/description',
+    path: '/description',
+    getParentRoute: () => EditorLayoutViewRoute,
+  } as any)
+const EditorLayoutViewLegendRoute = EditorLayoutViewLegendRouteImport.update({
+  id: '/legend',
+  path: '/legend',
+  getParentRoute: () => EditorLayoutViewRoute,
+} as any)
+const EditorLayoutViewManageRoute = EditorLayoutViewManageRouteImport.update({
+  id: '/manage',
+  path: '/manage',
+  getParentRoute: () => EditorLayoutViewRoute,
+} as any)
+const EditorLayoutEditIndexRoute = EditorLayoutEditIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => EditorLayoutEditRoute,
+} as any)
+const EditorLayoutEditBasemapRoute = EditorLayoutEditBasemapRouteImport.update({
+  id: '/basemap',
+  path: '/basemap',
+  getParentRoute: () => EditorLayoutEditRoute,
+} as any)
+const EditorLayoutEditDescriptionRoute =
+  EditorLayoutEditDescriptionRouteImport.update({
+    id: '/description',
+    path: '/description',
     getParentRoute: () => EditorLayoutEditRoute,
   } as any)
-const EditorLayoutEditLayersLayerIdRoute =
-  EditorLayoutEditLayersLayerIdRouteImport.update({
+const EditorLayoutEditManageRoute = EditorLayoutEditManageRouteImport.update({
+  id: '/manage',
+  path: '/manage',
+  getParentRoute: () => EditorLayoutEditRoute,
+} as any)
+const EditorLayoutEditSettingsRoute =
+  EditorLayoutEditSettingsRouteImport.update({
+    id: '/settings',
+    path: '/settings',
+    getParentRoute: () => EditorLayoutEditRoute,
+  } as any)
+const MapIdLayoutViewFoldersFolderIdRoute =
+  MapIdLayoutViewFoldersFolderIdRouteImport.update({
+    id: '/folders/$folderId',
+    path: '/folders/$folderId',
+    getParentRoute: () => MapIdLayoutViewRoute,
+  } as any)
+const MapIdLayoutViewLayersLayerIdRoute =
+  MapIdLayoutViewLayersLayerIdRouteImport.update({
     id: '/layers/$layerId',
     path: '/layers/$layerId',
+    getParentRoute: () => MapIdLayoutViewRoute,
+  } as any)
+const EditorLayoutViewFoldersFolderIdRoute =
+  EditorLayoutViewFoldersFolderIdRouteImport.update({
+    id: '/folders/$folderId',
+    path: '/folders/$folderId',
+    getParentRoute: () => EditorLayoutViewRoute,
+  } as any)
+const EditorLayoutViewLayersLayerIdRoute =
+  EditorLayoutViewLayersLayerIdRouteImport.update({
+    id: '/layers/$layerId',
+    path: '/layers/$layerId',
+    getParentRoute: () => EditorLayoutViewRoute,
+  } as any)
+const EditorLayoutEditFoldersFolderIdRoute =
+  EditorLayoutEditFoldersFolderIdRouteImport.update({
+    id: '/folders/$folderId',
+    path: '/folders/$folderId',
     getParentRoute: () => EditorLayoutEditRoute,
   } as any)
 const EditorLayoutEditFoldersAddRoute =
@@ -174,41 +192,23 @@ const EditorLayoutEditFoldersAddRoute =
     path: '/folders/add',
     getParentRoute: () => EditorLayoutEditRoute,
   } as any)
-const EditorLayoutEditFoldersFolderIdRoute =
-  EditorLayoutEditFoldersFolderIdRouteImport.update({
-    id: '/folders/$folderId',
-    path: '/folders/$folderId',
+const EditorLayoutEditLayersLayerIdRoute =
+  EditorLayoutEditLayersLayerIdRouteImport.update({
+    id: '/layers/$layerId',
+    path: '/layers/$layerId',
     getParentRoute: () => EditorLayoutEditRoute,
   } as any)
-const EditorLayoutViewLayersLayerIdRoute =
-  EditorLayoutViewLayersLayerIdRouteImport.update({
-    id: '/layers/$layerId',
-    path: '/layers/$layerId',
-    getParentRoute: () => EditorLayoutViewRoute,
-  } as any)
-const EditorLayoutViewFoldersFolderIdRoute =
-  EditorLayoutViewFoldersFolderIdRouteImport.update({
-    id: '/folders/$folderId',
-    path: '/folders/$folderId',
-    getParentRoute: () => EditorLayoutViewRoute,
-  } as any)
-const MapIdLayoutViewLayersLayerIdRoute =
-  MapIdLayoutViewLayersLayerIdRouteImport.update({
-    id: '/layers/$layerId',
-    path: '/layers/$layerId',
-    getParentRoute: () => MapIdLayoutViewRoute,
-  } as any)
-const MapIdLayoutViewFoldersFolderIdRoute =
-  MapIdLayoutViewFoldersFolderIdRouteImport.update({
-    id: '/folders/$folderId',
-    path: '/folders/$folderId',
-    getParentRoute: () => MapIdLayoutViewRoute,
+const EditorLayoutEditLayersAddRoute =
+  EditorLayoutEditLayersAddRouteImport.update({
+    id: '/layers/add',
+    path: '/layers/add',
+    getParentRoute: () => EditorLayoutEditRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/$mapId': typeof MapIdLayoutViewRouteWithChildren
-  '/editor': typeof EditorLayoutViewRouteWithChildren
+  '/$mapId': typeof MapIdRouteWithChildren
+  '/editor': typeof EditorRouteWithChildren
   '/editor/edit': typeof EditorLayoutEditRouteWithChildren
   '/$mapId/basemap': typeof MapIdLayoutViewBasemapRoute
   '/$mapId/description': typeof MapIdLayoutViewDescriptionRoute
@@ -393,11 +393,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/editor': {
-      id: '/editor'
-      path: '/editor'
-      fullPath: '/editor'
-      preLoaderRoute: typeof EditorRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/$mapId': {
@@ -407,19 +407,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MapIdRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/editor/_layout': {
-      id: '/editor/_layout'
-      path: ''
+    '/editor': {
+      id: '/editor'
+      path: '/editor'
       fullPath: '/editor'
-      preLoaderRoute: typeof EditorLayoutRouteImport
-      parentRoute: typeof EditorRoute
+      preLoaderRoute: typeof EditorRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/$mapId/_layout': {
       id: '/$mapId/_layout'
@@ -428,19 +421,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MapIdLayoutRouteImport
       parentRoute: typeof MapIdRoute
     }
-    '/editor/_layout/edit': {
-      id: '/editor/_layout/edit'
-      path: '/edit'
-      fullPath: '/editor/edit'
-      preLoaderRoute: typeof EditorLayoutEditRouteImport
-      parentRoute: typeof EditorLayoutRoute
-    }
-    '/editor/_layout/_view': {
-      id: '/editor/_layout/_view'
+    '/editor/_layout': {
+      id: '/editor/_layout'
       path: ''
       fullPath: '/editor'
-      preLoaderRoute: typeof EditorLayoutViewRouteImport
-      parentRoute: typeof EditorLayoutRoute
+      preLoaderRoute: typeof EditorLayoutRouteImport
+      parentRoute: typeof EditorRoute
     }
     '/$mapId/_layout/_view': {
       id: '/$mapId/_layout/_view'
@@ -449,102 +435,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MapIdLayoutViewRouteImport
       parentRoute: typeof MapIdLayoutRoute
     }
-    '/editor/_layout/edit/': {
-      id: '/editor/_layout/edit/'
-      path: '/'
-      fullPath: '/editor/edit/'
-      preLoaderRoute: typeof EditorLayoutEditIndexRouteImport
-      parentRoute: typeof EditorLayoutEditRoute
+    '/editor/_layout/_view': {
+      id: '/editor/_layout/_view'
+      path: ''
+      fullPath: '/editor'
+      preLoaderRoute: typeof EditorLayoutViewRouteImport
+      parentRoute: typeof EditorLayoutRoute
     }
-    '/editor/_layout/_view/': {
-      id: '/editor/_layout/_view/'
-      path: '/'
-      fullPath: '/editor/'
-      preLoaderRoute: typeof EditorLayoutViewIndexRouteImport
-      parentRoute: typeof EditorLayoutViewRoute
+    '/editor/_layout/edit': {
+      id: '/editor/_layout/edit'
+      path: '/edit'
+      fullPath: '/editor/edit'
+      preLoaderRoute: typeof EditorLayoutEditRouteImport
+      parentRoute: typeof EditorLayoutRoute
     }
     '/$mapId/_layout/_view/': {
       id: '/$mapId/_layout/_view/'
       path: '/'
       fullPath: '/$mapId/'
       preLoaderRoute: typeof MapIdLayoutViewIndexRouteImport
-      parentRoute: typeof MapIdLayoutViewRoute
-    }
-    '/editor/_layout/edit/settings': {
-      id: '/editor/_layout/edit/settings'
-      path: '/settings'
-      fullPath: '/editor/edit/settings'
-      preLoaderRoute: typeof EditorLayoutEditSettingsRouteImport
-      parentRoute: typeof EditorLayoutEditRoute
-    }
-    '/editor/_layout/edit/manage': {
-      id: '/editor/_layout/edit/manage'
-      path: '/manage'
-      fullPath: '/editor/edit/manage'
-      preLoaderRoute: typeof EditorLayoutEditManageRouteImport
-      parentRoute: typeof EditorLayoutEditRoute
-    }
-    '/editor/_layout/edit/description': {
-      id: '/editor/_layout/edit/description'
-      path: '/description'
-      fullPath: '/editor/edit/description'
-      preLoaderRoute: typeof EditorLayoutEditDescriptionRouteImport
-      parentRoute: typeof EditorLayoutEditRoute
-    }
-    '/editor/_layout/edit/basemap': {
-      id: '/editor/_layout/edit/basemap'
-      path: '/basemap'
-      fullPath: '/editor/edit/basemap'
-      preLoaderRoute: typeof EditorLayoutEditBasemapRouteImport
-      parentRoute: typeof EditorLayoutEditRoute
-    }
-    '/editor/_layout/_view/manage': {
-      id: '/editor/_layout/_view/manage'
-      path: '/manage'
-      fullPath: '/editor/manage'
-      preLoaderRoute: typeof EditorLayoutViewManageRouteImport
-      parentRoute: typeof EditorLayoutViewRoute
-    }
-    '/editor/_layout/_view/legend': {
-      id: '/editor/_layout/_view/legend'
-      path: '/legend'
-      fullPath: '/editor/legend'
-      preLoaderRoute: typeof EditorLayoutViewLegendRouteImport
-      parentRoute: typeof EditorLayoutViewRoute
-    }
-    '/editor/_layout/_view/description': {
-      id: '/editor/_layout/_view/description'
-      path: '/description'
-      fullPath: '/editor/description'
-      preLoaderRoute: typeof EditorLayoutViewDescriptionRouteImport
-      parentRoute: typeof EditorLayoutViewRoute
-    }
-    '/editor/_layout/_view/basemap': {
-      id: '/editor/_layout/_view/basemap'
-      path: '/basemap'
-      fullPath: '/editor/basemap'
-      preLoaderRoute: typeof EditorLayoutViewBasemapRouteImport
-      parentRoute: typeof EditorLayoutViewRoute
-    }
-    '/$mapId/_layout/_view/manage': {
-      id: '/$mapId/_layout/_view/manage'
-      path: '/manage'
-      fullPath: '/$mapId/manage'
-      preLoaderRoute: typeof MapIdLayoutViewManageRouteImport
-      parentRoute: typeof MapIdLayoutViewRoute
-    }
-    '/$mapId/_layout/_view/legend': {
-      id: '/$mapId/_layout/_view/legend'
-      path: '/legend'
-      fullPath: '/$mapId/legend'
-      preLoaderRoute: typeof MapIdLayoutViewLegendRouteImport
-      parentRoute: typeof MapIdLayoutViewRoute
-    }
-    '/$mapId/_layout/_view/description': {
-      id: '/$mapId/_layout/_view/description'
-      path: '/description'
-      fullPath: '/$mapId/description'
-      preLoaderRoute: typeof MapIdLayoutViewDescriptionRouteImport
       parentRoute: typeof MapIdLayoutViewRoute
     }
     '/$mapId/_layout/_view/basemap': {
@@ -554,18 +463,130 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MapIdLayoutViewBasemapRouteImport
       parentRoute: typeof MapIdLayoutViewRoute
     }
-    '/editor/_layout/edit/layers/add': {
-      id: '/editor/_layout/edit/layers/add'
-      path: '/layers/add'
-      fullPath: '/editor/edit/layers/add'
-      preLoaderRoute: typeof EditorLayoutEditLayersAddRouteImport
+    '/$mapId/_layout/_view/description': {
+      id: '/$mapId/_layout/_view/description'
+      path: '/description'
+      fullPath: '/$mapId/description'
+      preLoaderRoute: typeof MapIdLayoutViewDescriptionRouteImport
+      parentRoute: typeof MapIdLayoutViewRoute
+    }
+    '/$mapId/_layout/_view/legend': {
+      id: '/$mapId/_layout/_view/legend'
+      path: '/legend'
+      fullPath: '/$mapId/legend'
+      preLoaderRoute: typeof MapIdLayoutViewLegendRouteImport
+      parentRoute: typeof MapIdLayoutViewRoute
+    }
+    '/$mapId/_layout/_view/manage': {
+      id: '/$mapId/_layout/_view/manage'
+      path: '/manage'
+      fullPath: '/$mapId/manage'
+      preLoaderRoute: typeof MapIdLayoutViewManageRouteImport
+      parentRoute: typeof MapIdLayoutViewRoute
+    }
+    '/editor/_layout/_view/': {
+      id: '/editor/_layout/_view/'
+      path: '/'
+      fullPath: '/editor/'
+      preLoaderRoute: typeof EditorLayoutViewIndexRouteImport
+      parentRoute: typeof EditorLayoutViewRoute
+    }
+    '/editor/_layout/_view/basemap': {
+      id: '/editor/_layout/_view/basemap'
+      path: '/basemap'
+      fullPath: '/editor/basemap'
+      preLoaderRoute: typeof EditorLayoutViewBasemapRouteImport
+      parentRoute: typeof EditorLayoutViewRoute
+    }
+    '/editor/_layout/_view/description': {
+      id: '/editor/_layout/_view/description'
+      path: '/description'
+      fullPath: '/editor/description'
+      preLoaderRoute: typeof EditorLayoutViewDescriptionRouteImport
+      parentRoute: typeof EditorLayoutViewRoute
+    }
+    '/editor/_layout/_view/legend': {
+      id: '/editor/_layout/_view/legend'
+      path: '/legend'
+      fullPath: '/editor/legend'
+      preLoaderRoute: typeof EditorLayoutViewLegendRouteImport
+      parentRoute: typeof EditorLayoutViewRoute
+    }
+    '/editor/_layout/_view/manage': {
+      id: '/editor/_layout/_view/manage'
+      path: '/manage'
+      fullPath: '/editor/manage'
+      preLoaderRoute: typeof EditorLayoutViewManageRouteImport
+      parentRoute: typeof EditorLayoutViewRoute
+    }
+    '/editor/_layout/edit/': {
+      id: '/editor/_layout/edit/'
+      path: '/'
+      fullPath: '/editor/edit/'
+      preLoaderRoute: typeof EditorLayoutEditIndexRouteImport
       parentRoute: typeof EditorLayoutEditRoute
     }
-    '/editor/_layout/edit/layers/$layerId': {
-      id: '/editor/_layout/edit/layers/$layerId'
+    '/editor/_layout/edit/basemap': {
+      id: '/editor/_layout/edit/basemap'
+      path: '/basemap'
+      fullPath: '/editor/edit/basemap'
+      preLoaderRoute: typeof EditorLayoutEditBasemapRouteImport
+      parentRoute: typeof EditorLayoutEditRoute
+    }
+    '/editor/_layout/edit/description': {
+      id: '/editor/_layout/edit/description'
+      path: '/description'
+      fullPath: '/editor/edit/description'
+      preLoaderRoute: typeof EditorLayoutEditDescriptionRouteImport
+      parentRoute: typeof EditorLayoutEditRoute
+    }
+    '/editor/_layout/edit/manage': {
+      id: '/editor/_layout/edit/manage'
+      path: '/manage'
+      fullPath: '/editor/edit/manage'
+      preLoaderRoute: typeof EditorLayoutEditManageRouteImport
+      parentRoute: typeof EditorLayoutEditRoute
+    }
+    '/editor/_layout/edit/settings': {
+      id: '/editor/_layout/edit/settings'
+      path: '/settings'
+      fullPath: '/editor/edit/settings'
+      preLoaderRoute: typeof EditorLayoutEditSettingsRouteImport
+      parentRoute: typeof EditorLayoutEditRoute
+    }
+    '/$mapId/_layout/_view/folders/$folderId': {
+      id: '/$mapId/_layout/_view/folders/$folderId'
+      path: '/folders/$folderId'
+      fullPath: '/$mapId/folders/$folderId'
+      preLoaderRoute: typeof MapIdLayoutViewFoldersFolderIdRouteImport
+      parentRoute: typeof MapIdLayoutViewRoute
+    }
+    '/$mapId/_layout/_view/layers/$layerId': {
+      id: '/$mapId/_layout/_view/layers/$layerId'
       path: '/layers/$layerId'
-      fullPath: '/editor/edit/layers/$layerId'
-      preLoaderRoute: typeof EditorLayoutEditLayersLayerIdRouteImport
+      fullPath: '/$mapId/layers/$layerId'
+      preLoaderRoute: typeof MapIdLayoutViewLayersLayerIdRouteImport
+      parentRoute: typeof MapIdLayoutViewRoute
+    }
+    '/editor/_layout/_view/folders/$folderId': {
+      id: '/editor/_layout/_view/folders/$folderId'
+      path: '/folders/$folderId'
+      fullPath: '/editor/folders/$folderId'
+      preLoaderRoute: typeof EditorLayoutViewFoldersFolderIdRouteImport
+      parentRoute: typeof EditorLayoutViewRoute
+    }
+    '/editor/_layout/_view/layers/$layerId': {
+      id: '/editor/_layout/_view/layers/$layerId'
+      path: '/layers/$layerId'
+      fullPath: '/editor/layers/$layerId'
+      preLoaderRoute: typeof EditorLayoutViewLayersLayerIdRouteImport
+      parentRoute: typeof EditorLayoutViewRoute
+    }
+    '/editor/_layout/edit/folders/$folderId': {
+      id: '/editor/_layout/edit/folders/$folderId'
+      path: '/folders/$folderId'
+      fullPath: '/editor/edit/folders/$folderId'
+      preLoaderRoute: typeof EditorLayoutEditFoldersFolderIdRouteImport
       parentRoute: typeof EditorLayoutEditRoute
     }
     '/editor/_layout/edit/folders/add': {
@@ -575,40 +596,19 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EditorLayoutEditFoldersAddRouteImport
       parentRoute: typeof EditorLayoutEditRoute
     }
-    '/editor/_layout/edit/folders/$folderId': {
-      id: '/editor/_layout/edit/folders/$folderId'
-      path: '/folders/$folderId'
-      fullPath: '/editor/edit/folders/$folderId'
-      preLoaderRoute: typeof EditorLayoutEditFoldersFolderIdRouteImport
+    '/editor/_layout/edit/layers/$layerId': {
+      id: '/editor/_layout/edit/layers/$layerId'
+      path: '/layers/$layerId'
+      fullPath: '/editor/edit/layers/$layerId'
+      preLoaderRoute: typeof EditorLayoutEditLayersLayerIdRouteImport
       parentRoute: typeof EditorLayoutEditRoute
     }
-    '/editor/_layout/_view/layers/$layerId': {
-      id: '/editor/_layout/_view/layers/$layerId'
-      path: '/layers/$layerId'
-      fullPath: '/editor/layers/$layerId'
-      preLoaderRoute: typeof EditorLayoutViewLayersLayerIdRouteImport
-      parentRoute: typeof EditorLayoutViewRoute
-    }
-    '/editor/_layout/_view/folders/$folderId': {
-      id: '/editor/_layout/_view/folders/$folderId'
-      path: '/folders/$folderId'
-      fullPath: '/editor/folders/$folderId'
-      preLoaderRoute: typeof EditorLayoutViewFoldersFolderIdRouteImport
-      parentRoute: typeof EditorLayoutViewRoute
-    }
-    '/$mapId/_layout/_view/layers/$layerId': {
-      id: '/$mapId/_layout/_view/layers/$layerId'
-      path: '/layers/$layerId'
-      fullPath: '/$mapId/layers/$layerId'
-      preLoaderRoute: typeof MapIdLayoutViewLayersLayerIdRouteImport
-      parentRoute: typeof MapIdLayoutViewRoute
-    }
-    '/$mapId/_layout/_view/folders/$folderId': {
-      id: '/$mapId/_layout/_view/folders/$folderId'
-      path: '/folders/$folderId'
-      fullPath: '/$mapId/folders/$folderId'
-      preLoaderRoute: typeof MapIdLayoutViewFoldersFolderIdRouteImport
-      parentRoute: typeof MapIdLayoutViewRoute
+    '/editor/_layout/edit/layers/add': {
+      id: '/editor/_layout/edit/layers/add'
+      path: '/layers/add'
+      fullPath: '/editor/edit/layers/add'
+      preLoaderRoute: typeof EditorLayoutEditLayersAddRouteImport
+      parentRoute: typeof EditorLayoutEditRoute
     }
   }
 }
